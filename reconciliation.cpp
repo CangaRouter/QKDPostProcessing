@@ -23,7 +23,7 @@ Reconciliation::Reconciliation(const Algorithm &algorithm,
     DEBUG("Start reconciliation: noisy_key=" << noisy_key.to_string());
 }
 
-Reconciliation::Reconciliation(const Algorithm &algorithm,
+/*Reconciliation::Reconciliation(const Algorithm &algorithm,
                                MockClassicalSession &classical_session,
                                const Key &noisy_key,
                                double estimated_bit_error_rate,
@@ -35,7 +35,7 @@ Reconciliation::Reconciliation(const Algorithm &algorithm,
                                correct_key(correct_key),
                                nr_key_bits(noisy_key.get_nr_bits()) {
     DEBUG("Start reconciliation: noisy_key=" << noisy_key.to_string());
-}
+}*/
 
 Reconciliation::~Reconciliation() {
     DEBUG("End reconciliation");

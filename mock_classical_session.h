@@ -7,7 +7,8 @@
 
 namespace Cascade {
 
-    class MockClassicalSession : public ClassicalSession {
+    class MockClassicalSession   //: public ClassicalSession  *uncomment to use mock
+            {
     public:
         MockClassicalSession(Key &correct_key, bool cache_shuffles);
 
@@ -18,6 +19,8 @@ namespace Cascade {
         virtual void start_iteration_with_shuffle(int iteration_nr, ShufflePtr shuffle);
 
         virtual void ask_correct_parities(PendingItemQueue &ask_correct_parity_blocks);
+
+        void test (int deltas);
 
     private:
         Key &correct_key;
