@@ -1,4 +1,4 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" /Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade
+/home/marco/Downloads/clion-2022.2.1/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /home/marco/Desktop/Thesis/MyCascade -B /home/marco/Desktop/Thesis/MyCascade/cmake-build-debug
 -- Configuring done
 -- Generating done
--- Build files have been written to: /Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug
+-- Build files have been written to: /home/marco/Desktop/Thesis/MyCascade/cmake-build-debug

@@ -25,11 +25,11 @@ namespace Cascade {
                        double estimated_bit_error_rate,
                        const Key *correct_key = NULL);
 
-        Reconciliation(const Algorithm &algorithm,
+     /*   Reconciliation(const Algorithm &algorithm,
                                        MockClassicalSession &classical_session,
                                        const Key &noisy_key,
                                        double estimated_bit_error_rate,
-                                       const Key *correct_key);
+                                       const Key *correct_key);*/
 
         ~Reconciliation();
 

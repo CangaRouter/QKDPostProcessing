@@ -4,6 +4,7 @@
 #include "key.h"
 #include "shuffle.h"
 #include "shuffled_key.h"
+#include "AMQPcpp.h"
 
 using namespace Cascade;
 
@@ -47,4 +48,48 @@ void MockClassicalSession::ask_correct_parities(PendingItemQueue &ask_correct_pa
                                     " block=" << block->debug_str() <<
                                     " correct_parity=" << correct_parity);
     }
+}
+
+void MockClassicalSession::test (int deltas){
+    try {
+//		AMQP amqp;
+//		AMQP amqp(AMQPDEBUG);
+
+        AMQP amqp("localhost:5672");		// all connect string
+
+        AMQPExchange * ex = amqp.createExchange("e");
+        ex->Declare("e", "fanout");
+
+        AMQPQueue * qu2 = amqp.createQueue("q2");
+        qu2->Declare();
+        qu2->Bind( "e", "");
+
+        std::string ss = "Differencies:  " + std::to_string(deltas);
+        /* test very long message
+        ss = ss+ss+ss+ss+ss+ss+ss;
+        ss += ss+ss+ss+ss+ss+ss+ss;
+        ss += ss+ss+ss+ss+ss+ss+ss;
+        ss += ss+ss+ss+ss+ss+ss+ss;
+        ss += ss+ss+ss+ss+ss+ss+ss;
+*/
+
+        ex->setHeader("Delivery-mode", 2);
+        ex->setHeader("Content-type", "text/text");
+        ex->setHeader("Content-encoding", "UTF-8");
+
+        ex->Publish(  ss , ""); // publish very long message
+
+        //ex->Publish(  "message 2 " , "");
+      //  ex->Publish(  "message 3 " , "");
+
+
+      /*  if (argc==2) {
+            AMQPQueue * qu = amqp.createQueue();
+            qu->Cancel(   amqp_cstring_bytes(argv[1]) );
+        }*/
+
+    } catch (AMQPException e) {
+        std::cout << e.getMessage() << std::endl;
+    }
+
 }

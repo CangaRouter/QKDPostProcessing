@@ -8,172 +8,174 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug"/>
+				<Option working_dir="/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="rebuild_cache">
-				<Option working_dir="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Mycascade">
-				<Option output="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Mycascade" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug"/>
+				<Option output="/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Mycascade" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
-					<Add directory="/System/Library/Frameworks"/>
-					<Add directory="/Library/Frameworks"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 Mycascade"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 Mycascade"/>
+					<CompileFile command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Mycascade/fast">
-				<Option output="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Mycascade" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug"/>
+				<Option output="/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Mycascade" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
-					<Add directory="/System/Library/Frameworks"/>
-					<Add directory="/Library/Frameworks"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 Mycascade/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 Mycascade/fast"/>
+					<CompileFile command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j2 -f &quot;/home/marco/Desktop/Thesis/MyCascade/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/RabbitmqClassicalSession.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/RabbitmqClassicalSession.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/RabbitmqClassicalSession.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/RabbitmqClassicalSession.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/algorithm.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/algorithm.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/algorithm.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/algorithm.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/block.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/block.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/block.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/block.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/classical_session.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/classical_session.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/classical_session.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/classical_session.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/debug.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/debug.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/debug.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/debug.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/iteration.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/iteration.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/iteration.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/iteration.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/key.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/key.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/key.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/key.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/main.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/main.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/mock_classical_session.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/mock_classical_session.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/mock_classical_session.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/mock_classical_session.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/pending_item.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/pending_item.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/pending_item.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/pending_item.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/random.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/random.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/random.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/random.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/reconciliation.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/reconciliation.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/reconciliation.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/reconciliation.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/report.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/report.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/report.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/report.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/shuffle.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/shuffle.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/shuffle.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/shuffle.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/shuffled_key.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/shuffled_key.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/shuffled_key.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/shuffled_key.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/stats.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/stats.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/stats.h">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/stats.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/Users/marcopappalardo/Desktop/Polito/Thesis/Mycascade/CMakeLists.txt">
+		<Unit filename="/home/marco/Desktop/Thesis/MyCascade/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
