@@ -36,14 +36,8 @@ int main(int argc, char** argv) {
         if (strcmp(argv[3],"sender")==0){
             set_random_uint32_seed(seed);
             Key correct_key(seed);
-            Key noisy_key = correct_key;
-            double bit_error_rate = 0.1;
-            noisy_key.apply_noise(bit_error_rate);
             ClassicalSession classical_session(correct_key, algorithm->cache_shuffles, "localhost","5672","e","q2");
-            Reconciliation reconciliation(*algorithm, classical_session, noisy_key, bit_error_rate);
-            reconciliation.reconcile();
-            Key& reconciled_key = reconciliation.get_reconciled_key();
-            classical_session.test(correct_key.nr_bits_different(reconciled_key));
+            classical_session.openSenderChannel();
             //ASSERT_EQ(correct_key.nr_bits_different(reconciled_key), 0);
             return 0;
         }
@@ -53,7 +47,6 @@ int main(int argc, char** argv) {
             Key noisy_key = correct_key;
             double bit_error_rate = 0.1;
             noisy_key.apply_noise(bit_error_rate);
-
             ClassicalSession classical_session(correct_key, algorithm->cache_shuffles);
             classical_session.configureChannel("localhost","5672","e","q2");
             Reconciliation reconciliation(*algorithm, classical_session, noisy_key, bit_error_rate);

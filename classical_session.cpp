@@ -54,36 +54,58 @@ void ClassicalSession::start_iteration_with_shuffle(int iteration_nr, ShufflePtr
     shuffled_keys[iteration_nr] = shuffled_key;
 }
 
-int onMessageReceiver( AMQPMessage * message  ) {
+int ClassicalSession::onMessageReceiver( AMQPMessage * message  ) {
     uint32_t j = 0;
     const char * data = message->getMessage(&j);
 
     std::string buffer(data);
 
-    buffer=buffer.substr(buffer.find(','));
+    int seq1=stoi(buffer.substr(buffer.find(',')));
+    if(seq1!=seq){
+        return -1;
+    }
+    buffer=buffer.substr (buffer.find(',')+1, buffer.length());
 
-    return stoi(buffer);
+    receiverbit=stoi(buffer);
+    return 1;
 };
 
-int onMessageSender( AMQPMessage * message  ) {
+int ClassicalSession::onMessageSender( AMQPMessage * message  ) {
     int find=0;
     int arguments[4];
     uint32_t j = 0;
     const char * data = message->getMessage(&j);
 
     std::string buffer(data);
-    for(int i=0;i<4;i++){
-        arguments[i]=stoi(buffer.substr(find,buffer.find(',')));
-
+    //Received message will be an array of comma-divided numbers so to parse it is just necessary to delete commas and retrieve values
+    //following the format #sequence, #iteration, #startBit, #endBit
+    for (auto& a :arguments)
+    {
+       a= stoi (buffer.substr (0, buffer.find (',')));
+        buffer = buffer.substr (buffer.find (',')+1);
     }
 
-    buffer=buffer.substr(buffer.find(','));
 
 
 
-    ShuffledKeyPtr shuffled_key = shuffled_keys[iteration_nr];
-    int correctbit= shuffled_key->compute_range_parity(start_bit,
-                                              end_bit);
+
+    ShuffledKeyPtr shuffled_key = shuffled_keys[arguments[1]];
+    int correctbit= shuffled_key->compute_range_parity(arguments[2],
+                                              arguments[3]);
+    AMQP amqp(hostip+":"+hostport);
+
+    AMQPExchange * correctEx=amqp.createExchange(exchange+"sender");
+    correctEx->Declare("e", "fanout");
+    AMQPQueue * correctQueue=amqp.createQueue(queue+"sender");
+    correctQueue->Declare();
+    correctQueue->Bind( exchange, "");
+    correctEx->setHeader("Delivery-mode", 2);
+    correctEx->setHeader("Content-type", "text/text");
+    correctEx->setHeader("Content-encoding", "UTF-8");
+
+    std::string correctMessage= arguments[0]+","+  std::to_string(correctbit);
+
+    correctEx->Publish(correctMessage,"");
 
 
     return 1;
@@ -98,11 +120,10 @@ void ClassicalSession::ask_correct_parities(PendingItemQueue &ask_correct_parity
         BlockPtr block = pending_item.block;
         int iteration_nr = block->get_iteration().get_iteration_nr();
         ShuffledKeyPtr shuffled_key = shuffled_keys[iteration_nr];
-        int startBit=block->get_start_bit_nr();
-        int endBit=block->get_end_bit_nr();
-        int correct_parity = shuffled_key->compute_range_parity(block->get_start_bit_nr(),
-                                                                block->get_end_bit_nr());
+        int correct_parity = parityRound(block->get_start_bit_nr(),
+                                                                block->get_end_bit_nr(),iteration_nr);
         block->set_correct_parity(correct_parity);
+        senderbit=-1;
 
         DEBUG("Ask correct parity:" <<
                                     " block=" << block->debug_str() <<
@@ -121,6 +142,8 @@ int ClassicalSession::parityRound(int startBit, int endBit, int iteration){
     ex->setHeader("Content-type", "text/text");
     ex->setHeader("Content-encoding", "UTF-8");
 
+    //following the format #sequence, #iteration, #startBit, #endBit
+
     std::string message=std::to_string(seq++)+","+std::to_string(iteration)+","+std::to_string(startBit)+","+std::to_string(endBit);
 
     ex->Publish(message,"");
@@ -129,11 +152,13 @@ int ClassicalSession::parityRound(int startBit, int endBit, int iteration){
     qu1->Declare();
     qu1->Bind(exchange+"receiver","");
     qu1->setConsumerTag("Received");
-    qu1->addEvent(AMQP_MESSAGE, onMessage );
-
+    qu1->addEvent(AMQP_MESSAGE, onMessageReceiver );
     qu1->Consume(AMQP_NOACK);
 
-    return 1;
+     if(receiverbit!=0 && receiverbit !=1)
+         throw "suca";
+
+    return receiverbit;
 
 }
 
@@ -144,21 +169,10 @@ void ClassicalSession::openSenderChannel(){
     qu1->Bind(exchange+"receiver","");
     qu1->setConsumerTag("Received");
     qu1->addEvent(AMQP_MESSAGE, onMessageSender );
-
     qu1->Consume(AMQP_NOACK);
 }
 
-int ClassicalSession::reply_correct_parities(int iteration_nr, int start_bit, int end_bit) {
 
-        ShuffledKeyPtr shuffled_key = shuffled_keys[iteration_nr];
-        return shuffled_key->compute_range_parity(start_bit,
-                                                                end_bit);
-        DEBUG("Ask correct parity:" <<
-                                    " block=" << block->debug_str() <<
-                                    " correct_parity=" << correct_parity);
-
-
-}
 
 void ClassicalSession::test(int deltas) {
     try {

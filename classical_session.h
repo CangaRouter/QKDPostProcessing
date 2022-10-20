@@ -55,6 +55,9 @@ namespace Cascade {
         const std::string &getHostport() const;
 
         void setHostport(const std::string &hostport);
+
+        int onMessageSender( AMQPMessage * message  );
+        int onMessageReceiver( AMQPMessage * message  );
     private:
         Key &correct_key;
         bool cache_shuffles;
@@ -64,7 +67,8 @@ namespace Cascade {
         std::string exchange;
         std::string queue;
         int seq=0;
-
+        int senderbit= -1;
+        int receiverbit=-1;
     };
 
 } /* namespace Cascade */
