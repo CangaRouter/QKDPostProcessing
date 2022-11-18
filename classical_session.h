@@ -56,8 +56,9 @@ namespace Cascade {
 
         void setHostport(const std::string &hostport);
 
-        int onMessageSender( AMQPMessage * message  );
-        int onMessageReceiver( AMQPMessage * message  );
+        static int onMessageSender( AMQPMessage * message  );
+        static int onMessageReceiver( AMQPMessage * message  );
+        int actualSequence(int* i);
     private:
         Key &correct_key;
         bool cache_shuffles;

@@ -53,7 +53,9 @@ void ClassicalSession::start_iteration_with_shuffle(int iteration_nr, ShufflePtr
     ShuffledKeyPtr shuffled_key(new ShuffledKey(correct_key, shuffle));
     shuffled_keys[iteration_nr] = shuffled_key;
 }
-
+int ClassicalSession::actualSequence(int *i){
+    return i==seq;
+}
 int ClassicalSession::onMessageReceiver( AMQPMessage * message  ) {
     uint32_t j = 0;
     const char * data = message->getMessage(&j);
@@ -61,16 +63,13 @@ int ClassicalSession::onMessageReceiver( AMQPMessage * message  ) {
     std::string buffer(data);
 
     int seq1=stoi(buffer.substr(buffer.find(',')));
-    if(seq1!=seq){
-        return -1;
-    }
     buffer=buffer.substr (buffer.find(',')+1, buffer.length());
 
     receiverbit=stoi(buffer);
     return 1;
 };
 
-int ClassicalSession::onMessageSender( AMQPMessage * message  ) {
+  int ClassicalSession::onMessageSender( AMQPMessage * message  ) {
     int find=0;
     int arguments[4];
     uint32_t j = 0;
