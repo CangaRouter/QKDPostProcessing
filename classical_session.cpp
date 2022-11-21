@@ -53,10 +53,8 @@ void ClassicalSession::start_iteration_with_shuffle(int iteration_nr, ShufflePtr
     ShuffledKeyPtr shuffled_key(new ShuffledKey(correct_key, shuffle));
     shuffled_keys[iteration_nr] = shuffled_key;
 }
-int ClassicalSession::actualSequence(int *i){
-    return i==seq;
-}
-int ClassicalSession::onMessageReceiver( AMQPMessage * message  ) {
+
+/*int ClassicalSession::onMessageReceiver( AMQPMessage * message  ) {
     uint32_t j = 0;
     const char * data = message->getMessage(&j);
 
@@ -67,9 +65,9 @@ int ClassicalSession::onMessageReceiver( AMQPMessage * message  ) {
 
     receiverbit=stoi(buffer);
     return 1;
-};
+};*/
 
-  int ClassicalSession::onMessageSender( AMQPMessage * message  ) {
+  /*int ClassicalSession::onMessageSender( AMQPMessage * message  ) {
     int find=0;
     int arguments[4];
     uint32_t j = 0;
@@ -108,7 +106,7 @@ int ClassicalSession::onMessageReceiver( AMQPMessage * message  ) {
 
 
     return 1;
-};
+};*/
 
 void ClassicalSession::ask_correct_parities(PendingItemQueue &ask_correct_parity_blocks) {
     // Once we implement the real classical session, we will need to keep track of the blocks

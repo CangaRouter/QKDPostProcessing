@@ -3,3 +3,12 @@
 //
 
 #include "RabbitmqClassicalSession.h"
+
+int senderReply
+{
+
+    
+};
+
+
+int
