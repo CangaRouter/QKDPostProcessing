@@ -1,4 +1,4 @@
-# Install script for directory: /tmp/tmp.iTe3rls4SI
+# Install script for directory: /home/marco/Desktop/Thesis
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/tmp/tmp.iTe3rls4SI/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/marco/Desktop/Thesis/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

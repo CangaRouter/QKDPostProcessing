@@ -39,7 +39,9 @@ ClassicalSession::configureChannel(std::string hostip, std::string hostport, std
 
 }
 
-void ClassicalSession::start_iteration_with_shuffle_seed(int iteration_nr,
+/* @TODO move this method correctly to receiver. Why does it need the correct key?
+ *  method moved to receiver
+ * void ClassicalSession::start_iteration_with_shuffle_seed(int iteration_nr,
                                                          uint64_t shuffle_seed) {
     int nr_key_bits = correct_key.get_nr_bits();
     ShufflePtr shuffle;
@@ -47,7 +49,7 @@ void ClassicalSession::start_iteration_with_shuffle_seed(int iteration_nr,
                                              cache_shuffles);
     ShuffledKeyPtr shuffled_key(new ShuffledKey(correct_key, shuffle));
     shuffled_keys[iteration_nr] = shuffled_key;
-}
+}*/
 
 void ClassicalSession::start_iteration_with_shuffle(int iteration_nr, ShufflePtr shuffle) {
     ShuffledKeyPtr shuffled_key(new ShuffledKey(correct_key, shuffle));
