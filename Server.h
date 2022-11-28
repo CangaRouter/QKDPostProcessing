@@ -2,8 +2,8 @@
 // Created by marco on 25/11/22.
 //
 
-#ifndef MYCASCADE_SENDER_H
-#define MYCASCADE_SENDER_H
+#ifndef MYCASCADE_SERVER_H
+#define MYCASCADE_SERVER_H
 
 #include <map>
 #include "key.h"
@@ -12,12 +12,12 @@
 
 namespace Cascade {
 
-    class Sender {
+    class Server {
     public:
 
-        Sender(Key &correctKey, bool cacheShuffles, const ClassicalSession &channel);
+        Server(Key &correctKey, bool cacheShuffles, const ClassicalSession &channel);
 
-        virtual ~Sender();
+        virtual ~Server();
 
     private:
         Key &correct_key;
@@ -32,4 +32,4 @@ namespace Cascade {
 
 } // Cascade
 
-#endif //MYCASCADE_SENDER_H
+#endif //MYCASCADE_SERVER_H

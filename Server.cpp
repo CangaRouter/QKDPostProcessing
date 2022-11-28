@@ -2,16 +2,16 @@
 // Created by marco on 25/11/22.
 //
 
-#include "Sender.h"
+#include "Server.h"
 
 namespace Cascade {
 
-    Sender::Sender(Key &correctKey, bool cacheShuffles, const ClassicalSession &channel) : correct_key(correctKey),
+    Server::Server(Key &correctKey, bool cacheShuffles, const ClassicalSession &channel) : correct_key(correctKey),
                                                                                            cache_shuffles(
                                                                                                    cacheShuffles),
                                                                                            channel(channel) {}
 
-    Sender::~Sender() {
+    Server::~Server() {
 
     }
 

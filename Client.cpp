@@ -2,13 +2,13 @@
 // Created by marco on 25/11/22.
 //
 
-#include "Receiver.h"
+#include "Client.h"
 
 namespace Cascade {
 
 
 
-    void Receiver::start_iteration_with_shuffle_seed(int iteration_nr,
+    void Client::start_iteration_with_shuffle_seed(int iteration_nr,
                                                              uint64_t shuffle_seed) {
         int nr_key_bits = correct_key.get_nr_bits();
         ShufflePtr shuffle;

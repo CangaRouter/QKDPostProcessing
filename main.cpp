@@ -8,7 +8,7 @@
 #include "random.h"
 #include "report.h"
 #include "reconciliation.h"
-#include "Sender.h"
+#include "Server.h"
 //#include "series.h"
 //#include <boost/filesystem.hpp>
 #include <cerrno>
@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
         ClassicalSession classical_session(correct_key, algorithm->cache_shuffles, "localhost","5672","e","q2");
 
         if (strcmp(argv[3],"sender")==0){
-            Sender sender();
+            Server sender();
             classical_session.openSenderChannel();
             //ASSERT_EQ(correct_key.nr_bits_different(reconciled_key), 0);
             return 0;

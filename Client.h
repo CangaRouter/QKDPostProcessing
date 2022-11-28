@@ -2,19 +2,19 @@
 // Created by marco on 25/11/22.
 //
 
-#ifndef MYCASCADE_RECEIVER_H
-#define MYCASCADE_RECEIVER_H
+#ifndef MYCASCADE_CLIENT_H
+#define MYCASCADE_CLIENT_H
 
 #include <cstdint>
 #include "classical_session.h"
 
 namespace Cascade {
 
-    class Receiver {
+    class Client {
 
 
     public:
-        Receiver();
+        Client();
 
     private:
         void start_iteration_with_shuffle_seed(int iteration_nr,
@@ -25,4 +25,4 @@ namespace Cascade {
 
 } // Cascade
 
-#endif //MYCASCADE_RECEIVER_H
+#endif //MYCASCADE_CLIENT_H
