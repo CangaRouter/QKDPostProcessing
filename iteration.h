@@ -10,15 +10,15 @@
 
 namespace Cascade {
 
-    class Reconciliation;
+    class Client;
 
     class Iteration
     {
     public:
-        Iteration(Reconciliation& reconciliation, int iteration_nr, bool biconf);
-        static ShufflePtr init_shuffle(Reconciliation& reconciliation, int iteration_nr);
+        Iteration(Client& reconciliation, int iteration_nr, bool biconf);
+        static ShufflePtr init_shuffle(Client& reconciliation, int iteration_nr);
         ~Iteration();
-        Reconciliation& get_reconciliation() const;
+        Client& get_reconciliation() const;
         int get_iteration_nr() const;
         bool get_biconf() const;
         ShufflePtr get_shuffle() const;
@@ -31,7 +31,7 @@ namespace Cascade {
         void schedule_initial_work_cascade();
         void schedule_initial_work_biconf();
         int try_correct_right_sibling_block(BlockPtr block, bool cascade);
-        Reconciliation& reconciliation;
+        Client& reconciliation;
         int iteration_nr;
         bool biconf;
         int nr_key_bits;

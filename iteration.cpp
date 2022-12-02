@@ -1,14 +1,14 @@
 #include "iteration.h"
 #include "algorithm.h"
 #include "debug.h"
-#include "reconciliation.h"
+#include "Client.h"
 #include <algorithm>
 #include <assert.h>
 #include <random>
 
 using namespace Cascade;
 
-Iteration::Iteration(Reconciliation& reconciliation, int iteration_nr, bool biconf):
+Iteration::Iteration(Client& reconciliation, int iteration_nr, bool biconf):
         reconciliation(reconciliation),
         iteration_nr(iteration_nr),
         biconf(biconf),
@@ -25,7 +25,7 @@ Iteration::Iteration(Reconciliation& reconciliation, int iteration_nr, bool bico
     DEBUG("Start " << (biconf ? "biconf" : "cascade") << " iteration " << iteration_nr);
 }
 
-ShufflePtr Iteration::init_shuffle(Reconciliation& reconciliation, int iteration_nr)
+ShufflePtr Iteration::init_shuffle(Client& reconciliation, int iteration_nr)
 {
     int nr_key_bits = reconciliation.get_nr_key_bits();
     const Algorithm& algorithm = reconciliation.get_algorithm();
@@ -38,7 +38,7 @@ Iteration::~Iteration()
 {
 }
 
-Reconciliation& Iteration::get_reconciliation() const
+Client& Iteration::get_reconciliation() const
 {
     return reconciliation;
 }

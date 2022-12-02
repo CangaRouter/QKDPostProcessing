@@ -8,9 +8,10 @@
 
 using namespace Cascade;
 
-MockClassicalSession::MockClassicalSession(Key &correct_key, bool cache_shuffles) :
+MockClassicalSession::MockClassicalSession(Key &correct_key, bool cache_shuffles, Server server) :
         correct_key(correct_key),
-        cache_shuffles(cache_shuffles) {
+        cache_shuffles(cache_shuffles), server(server) {
+
     DEBUG("Create MockClassicalSession: correct_key=" << correct_key.to_string());
 }
 
@@ -36,18 +37,7 @@ void MockClassicalSession::ask_correct_parities(PendingItemQueue &ask_correct_pa
     // Once we implement the real classical session, we will need to keep track of the blocks
     // for which we asked Alice the correct parity, but for which we have not yet received the
     // answer from Alice. For now, assume we get the answer immediately.
-    for (auto it = ask_correct_parity_blocks.begin(); it != ask_correct_parity_blocks.end(); ++it) {
-        PendingItem pending_item(*it);
-        BlockPtr block = pending_item.block;
-        int iteration_nr = block->get_iteration().get_iteration_nr();
-        ShuffledKeyPtr shuffled_key = shuffled_keys[iteration_nr];
-        int correct_parity = shuffled_key->compute_range_parity(block->get_start_bit_nr(),
-                                                                block->get_end_bit_nr());
-        block->set_correct_parity(correct_parity);
-        DEBUG("Ask correct parity:" <<
-                                    " block=" << block->debug_str() <<
-                                    " correct_parity=" << correct_parity);
-    }
+    server.ask_correct_parities(ask_correct_parity_blocks);
 }
 
 void MockClassicalSession::test (int deltas){

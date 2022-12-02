@@ -151,7 +151,7 @@ int ClassicalSession::parityRound(int startBit, int endBit, int iteration){
     qu1->Declare();
     qu1->Bind(exchange+"receiver","");
     qu1->setConsumerTag("Received");
-    qu1->addEvent(AMQP_MESSAGE, onMessageReceiver );
+   // qu1->addEvent(AMQP_MESSAGE, onMessageReceiver );
     qu1->Consume(AMQP_NOACK);
 
      if(receiverbit!=0 && receiverbit !=1)
@@ -167,7 +167,7 @@ void ClassicalSession::openSenderChannel(){
     qu1->Declare();
     qu1->Bind(exchange+"receiver","");
     qu1->setConsumerTag("Received");
-    qu1->addEvent(AMQP_MESSAGE, onMessageSender );
+  //  qu1->addEvent(AMQP_MESSAGE, onMessageSender );
     qu1->Consume(AMQP_NOACK);
 }
 

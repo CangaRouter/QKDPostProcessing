@@ -15,7 +15,9 @@ namespace Cascade {
     class Server {
     public:
 
-        Server(Key &correctKey, bool cacheShuffles, const ClassicalSession &channel);
+
+        Server(Key &correctKey, bool cacheShuffles);
+        void ask_correct_parities(PendingItemQueue &ask_correct_parity_blocks);
 
         virtual ~Server();
 
@@ -23,11 +25,11 @@ namespace Cascade {
         Key &correct_key;
         bool cache_shuffles;
         std::map<int, ShuffledKeyPtr> shuffled_keys;
-        ClassicalSession channel;
 
         int seq=0;
         int senderbit= -1;
         int receiverbit=-1;
+
     };
 
 } // Cascade

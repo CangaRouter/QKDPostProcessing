@@ -3,6 +3,7 @@
 
 #include "classical_session.h"
 #include "shuffled_key.h"
+#include "Server.h"
 #include <map>
 
 namespace Cascade {
@@ -10,7 +11,7 @@ namespace Cascade {
     class MockClassicalSession   //: public ClassicalSession  *uncomment to use mock
             {
     public:
-        MockClassicalSession(Key &correct_key, bool cache_shuffles);
+        MockClassicalSession(Key &correct_key, bool cache_shuffles, Server server);
 
         virtual ~MockClassicalSession();
 
@@ -26,6 +27,7 @@ namespace Cascade {
         Key &correct_key;
         bool cache_shuffles;
         std::map<int, ShuffledKeyPtr> shuffled_keys;
+        Server server;
     };
 
 } /* namespace Cascade */

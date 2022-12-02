@@ -7,7 +7,7 @@
 //#include "options.h"
 #include "random.h"
 #include "report.h"
-#include "reconciliation.h"
+#include "Client.h"
 #include "Server.h"
 //#include "series.h"
 //#include <boost/filesystem.hpp>
@@ -35,11 +35,10 @@ int main(int argc, char** argv) {
         assert(algorithm);
         set_random_uint32_seed(seed);
         Key correct_key(seed);
-        ClassicalSession classical_session(correct_key, algorithm->cache_shuffles, "localhost","5672","e","q2");
+        //ClassicalSession classical_session(correct_key, algorithm->cache_shuffles, "localhost","5672","e","q2");
 
         if (strcmp(argv[3],"sender")==0){
             Server sender();
-            classical_session.openSenderChannel();
             //ASSERT_EQ(correct_key.nr_bits_different(reconciled_key), 0);
             return 0;
         }
@@ -49,9 +48,9 @@ int main(int argc, char** argv) {
             Key noisy_key = correct_key;
             double bit_error_rate = 0.1;
             noisy_key.apply_noise(bit_error_rate);
-            ClassicalSession classical_session(correct_key, algorithm->cache_shuffles);
-            classical_session.configureChannel("localhost","5672","e","q2");
-            Reconciliation reconciliation(*algorithm, classical_session, noisy_key, bit_error_rate);
+            MockClassicalSession classical_session(correct_key, algorithm->cache_shuffles,
+                                                   Server(correct_key, false));
+            Client reconciliation(*algorithm, classical_session, noisy_key, bit_error_rate, &correct_key);
             reconciliation.reconcile();
             Key& reconciled_key = reconciliation.get_reconciled_key();
             std::cout<<"Differencies: "<<correct_key.nr_bits_different(reconciled_key);
@@ -81,7 +80,7 @@ int main(int argc, char** argv) {
     int remaining_bit_errors = 0;
     {
         // New scope to make sure reconciliation destructor is run before we reporting bit errors.
-        Cascade::Reconciliation reconciliation(*algorithm, classical_session, noisy_key, error_rate);
+        Cascade::Client reconciliation(*algorithm, classical_session, noisy_key, error_rate);
         reconciliation.reconcile();
     //    data_point.record_reconciliation_stats(reconciliation.get_stats());
         remaining_bit_errors = correct_key.nr_bits_different(reconciliation.get_reconciled_key());
