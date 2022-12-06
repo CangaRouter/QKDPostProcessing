@@ -30,9 +30,8 @@ int main(int argc, char** argv) {
     }
 
         char* algorithm_name=argv[2];
-        int seed=atoi(argv[1]);
+        int seed; //=atoi(argv[1]);
         const Algorithm* algorithm = Algorithm::get_by_name(algorithm_name);
-        assert(algorithm);
         set_random_uint32_seed(seed);
         Key correct_key(seed);
         //ClassicalSession classical_session(correct_key, algorithm->cache_shuffles, "localhost","5672","e","q2");
@@ -45,12 +44,13 @@ int main(int argc, char** argv) {
         else if (strcmp(argv[3],"receiver")==0){
             set_random_uint32_seed(seed);
             Key correct_key(10000);
+            std::cout<<correct_key.to_string()<<std::endl;
             Key noisy_key = correct_key;
-            double bit_error_rate = 0.1;
+            double bit_error_rate = 0.6;
             noisy_key.apply_noise(bit_error_rate);
             MockClassicalSession classical_session(correct_key, algorithm->cache_shuffles,
                                                    Server(correct_key, false));
-            Client reconciliation(*algorithm, classical_session, noisy_key, bit_error_rate, &correct_key);
+            Client reconciliation(*algorithm, classical_session, noisy_key, bit_error_rate);
             reconciliation.reconcile();
             Key& reconciled_key = reconciliation.get_reconciled_key();
             std::cout<<"Differencies: "<<correct_key.nr_bits_different(reconciled_key);

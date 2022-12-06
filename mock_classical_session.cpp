@@ -19,25 +19,17 @@ MockClassicalSession::~MockClassicalSession() {
 }
 
 void MockClassicalSession::start_iteration_with_shuffle_seed(int iteration_nr,
-                                                             uint64_t shuffle_seed) {
-    int nr_key_bits = correct_key.get_nr_bits();
-    ShufflePtr shuffle;
-    shuffle = Shuffle::new_shuffle_from_seed(iteration_nr, nr_key_bits, shuffle_seed,
-                                             cache_shuffles);
-    ShuffledKeyPtr shuffled_key(new ShuffledKey(correct_key, shuffle));
-    shuffled_keys[iteration_nr] = shuffled_key;
+                                                             uint32_t shuffle_seed) {
+    server.start_iteration_with_shuffle_seed(iteration_nr, std::to_string(shuffle_seed));
 }
 
-void MockClassicalSession::start_iteration_with_shuffle(int iteration_nr, ShufflePtr shuffle) {
-    ShuffledKeyPtr shuffled_key(new ShuffledKey(correct_key, shuffle));
-    shuffled_keys[iteration_nr] = shuffled_key;
-}
 
-void MockClassicalSession::ask_correct_parities(PendingItemQueue &ask_correct_parity_blocks) {
+
+int MockClassicalSession::channel_correct_parities(int iterationNr, int startBit, int endBit) {
     // Once we implement the real classical session, we will need to keep track of the blocks
     // for which we asked Alice the correct parity, but for which we have not yet received the
     // answer from Alice. For now, assume we get the answer immediately.
-    server.ask_correct_parities(ask_correct_parity_blocks);
+    return server.return_correct_parities(iterationNr,startBit,endBit);
 }
 
 void MockClassicalSession::test (int deltas){

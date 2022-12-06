@@ -79,7 +79,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "23"
+			"value" : "24"
 		},
 		{
 			"name" : "CMAKE_CACHE_PATCH_VERSION",
@@ -130,6 +130,18 @@
 			"value" : "-j4"
 		},
 		{
+			"name" : "CMAKE_COLOR_DIAGNOSTICS",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Enable colored diagnostics throughout."
+				}
+			],
+			"type" : "BOOL",
+			"value" : "ON"
+		},
+		{
 			"name" : "CMAKE_COLOR_MAKEFILE",
 			"properties" : 
 			[
@@ -155,7 +167,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/snap/clion/209/bin/cmake/linux/bin/cmake"
+			"value" : "/snap/clion/218/bin/cmake/linux/bin/cmake"
 		},
 		{
 			"name" : "CMAKE_CPACK_COMMAND",
@@ -167,7 +179,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/snap/clion/209/bin/cmake/linux/bin/cpack"
+			"value" : "/snap/clion/218/bin/cmake/linux/bin/cpack"
 		},
 		{
 			"name" : "CMAKE_CTEST_COMMAND",
@@ -179,7 +191,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/snap/clion/209/bin/cmake/linux/bin/ctest"
+			"value" : "/snap/clion/218/bin/cmake/linux/bin/ctest"
 		},
 		{
 			"name" : "CMAKE_CXX_COMPILER",
@@ -194,7 +206,7 @@
 					"value" : "CXX compiler"
 				}
 			],
-			"type" : "FILEPATH",
+			"type" : "STRING",
 			"value" : "/usr/bin/c++"
 		},
 		{
@@ -322,7 +334,7 @@
 					"value" : "C compiler"
 				}
 			],
-			"type" : "FILEPATH",
+			"type" : "STRING",
 			"value" : "/usr/bin/cc"
 		},
 		{
@@ -620,6 +632,18 @@
 			],
 			"type" : "INTERNAL",
 			"value" : "/usr/lib/gcc/x86_64-linux-gnu/11/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include"
+		},
+		{
+			"name" : "CMAKE_FIND_PACKAGE_REDIRECTS_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake."
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/marco/Desktop/Thesis/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -967,7 +991,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/snap/clion/209/bin/cmake/linux/share/cmake-3.23"
+			"value" : "/snap/clion/218/bin/cmake/linux/share/cmake-3.24"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
@@ -1272,6 +1296,18 @@
 			],
 			"type" : "FILEPATH",
 			"value" : "/usr/sbin/sysctl"
+		},
+		{
+			"name" : "_CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "linker supports push/pop state"
+				}
+			],
+			"type" : "INTERNAL",
+			"value" : "TRUE"
 		}
 	],
 	"kind" : "cache",

@@ -8,7 +8,9 @@
 #include <map>
 #include "key.h"
 #include "shuffled_key.h"
-#include "classical_session.h"
+#include "pending_item.h"
+#include "iteration.h"
+
 
 namespace Cascade {
 
@@ -17,7 +19,8 @@ namespace Cascade {
 
 
         Server(Key &correctKey, bool cacheShuffles);
-        void ask_correct_parities(PendingItemQueue &ask_correct_parity_blocks);
+        int return_correct_parities(int iterationNr, int startBit, int endBit);
+        void start_iteration_with_shuffle_seed(int iteration_nr, std::string shuffle_seed);
 
         virtual ~Server();
 
@@ -26,9 +29,7 @@ namespace Cascade {
         bool cache_shuffles;
         std::map<int, ShuffledKeyPtr> shuffled_keys;
 
-        int seq=0;
-        int senderbit= -1;
-        int receiverbit=-1;
+
 
     };
 

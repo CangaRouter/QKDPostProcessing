@@ -20,7 +20,7 @@ namespace Cascade {
         static ShufflePtr new_shuffle_from_seed(int iteration_nr, int nr_bits, uint64_t seed,
                                                 bool);
         ~Shuffle();
-        uint64_t get_seed() const;
+        uint32_t get_seed() const;
         int get_nr_bits() const;
         int orig_to_shuffle(int orig_bit_nr) const;
         int shuffle_to_orig(int shuffle_bit_nr) const;
@@ -33,7 +33,7 @@ namespace Cascade {
         int iteration_nr;
         int nr_bits;
         bool has_seed;
-        uint64_t seed;
+        uint32_t seed;
         typedef std::vector<int> BitMap;
         BitMap shuffled_to_orig_map;
         BitMap orig_to_shuffled_map;

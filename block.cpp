@@ -22,12 +22,10 @@ Block::Block(Iteration& iteration, int start_bit_nr, int end_bit_nr, Block* pare
         left_sub_block(NULL),
         right_sub_block(NULL)
 {
-    DEBUG("Create Block " << debug_str());
 }
 
 Block::~Block()
 {
-    DEBUG("Destroy Block " << debug_str());
 }
 
 Iteration& Block::get_iteration() const
@@ -72,7 +70,7 @@ std::string Block::compute_name() const
     return name;
 }
 
-std::string Block::debug_str() const
+/*std::string Block::debug_str() const
 {
     const Key* correct_key = iteration.get_reconciliation().get_correct_key();
     std::string str = compute_name() + "[";
@@ -94,7 +92,7 @@ std::string Block::debug_str() const
     }
     str += "]";
     return str;
-}
+}*/
 
 int Block::get_correct_parity()
 {

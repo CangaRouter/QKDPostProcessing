@@ -1,40 +1,25 @@
 #include "Client.h"
 #include "algorithm.h"
-#include "classical_session.h"
 #include "debug.h"
 #include "mock_classical_session.h"
-#include <assert.h>
-#include <math.h>
-#include <time.h>
+#include <cassert>
+#include <cmath>
+#include <ctime>
 
 using namespace Cascade;
 
-/*Client::Client(const Algorithm &algorithm,
-                               ClassicalSession &classical_session,
-                               const Key &noisy_key,
-                               double estimated_bit_error_rate,
-                               const Key *correct_key) :
-        algorithm(algorithm),
-        classical_session(classical_session),
-        estimated_bit_error_rate(estimated_bit_error_rate),
-        reconciled_key(noisy_key),
-        correct_key(correct_key),
-        nr_key_bits(noisy_key.get_nr_bits()) {
-    DEBUG("Start reconciliation: noisy_key=" << noisy_key.to_string());
-}*/
 
 Client::Client(const Algorithm &algorithm,
                MockClassicalSession &classical_session,
                const Key &noisy_key,
-               double estimated_bit_error_rate,
-               const Key *correct_key) :
+               double estimated_bit_error_rate) :
                                algorithm(algorithm),
                                classical_session(classical_session),
                                estimated_bit_error_rate(estimated_bit_error_rate),
                                reconciled_key(noisy_key),
-                               correct_key(correct_key),
                                nr_key_bits(noisy_key.get_nr_bits()) {
-    DEBUG("Start reconciliation: noisy_key=" << noisy_key.to_string());
+    std::cout<<noisy_key.to_string()<<std::endl; //for debug
+
 }
 
 Client::~Client() {
@@ -53,9 +38,7 @@ Key &Client::get_reconciled_key() {
     return reconciled_key;
 }
 
-const Key *Client::get_correct_key() const {
-    return correct_key;
-}
+
 
 int Client::get_nr_key_bits() const {
     return nr_key_bits;
@@ -141,29 +124,23 @@ void Client::all_biconf_iterations() {
 }
 
 void Client::start_iteration_common(int iteration_nr, bool biconf) {
+
     IterationPtr iteration(new Iteration(*this, iteration_nr, biconf));
     iterations.push_back(iteration);
     stats.start_iteration_messages += 1;
-    if (algorithm.ask_correct_parity_using_shuffle_seed) {
-        classical_session.start_iteration_with_shuffle_seed(iteration_nr,
+    classical_session.start_iteration_with_shuffle_seed(iteration_nr,
                                                             iteration->get_shuffle()->get_seed());
-        stats.start_iteration_bits += 32 + 64;
-    } else {
-        ShufflePtr shuffle = iteration->get_shuffle();
-        classical_session.start_iteration_with_shuffle(iteration_nr, shuffle);
-        stats.start_iteration_bits += 32 + 32 * shuffle->get_nr_bits();
-    }
+    stats.start_iteration_bits += 32 + 64;
+
     iteration->schedule_initial_work();
 }
 
 void Client::schedule_try_correct(BlockPtr block, bool correct_right_sibling) {
-    DEBUG("Schedule try_correct: block=" << block->debug_str());
     PendingItem pending_item(block, correct_right_sibling);
     pending_try_correct_blocks.push_back(pending_item);
 }
 
 void Client::schedule_ask_correct_parity(BlockPtr block, bool correct_right_sibling) {
-    DEBUG("Schedule ask_correct_parity: block=" << block->debug_str());
     stats.ask_parity_bits += block->encoded_bits();
     PendingItem pending_item(block, correct_right_sibling);
     pending_ask_correct_parity_blocks.push_back(pending_item);
@@ -215,12 +192,26 @@ int Client::service_pending_try_correct(bool cascade) {
     return errors_corrected;
 }
 
+void Client::ask_correct_parities(PendingItemQueue &ask_correct_parity_blocks) {
+    // Once we implement the real classical session, we will need to keep track of the blocks
+    // for which we asked Alice the correct parity, but for which we have not yet received the
+    // answer from Alice. For now, assume we get the answer immediately.
+    for (auto it = ask_correct_parity_blocks.begin(); it != ask_correct_parity_blocks.end(); ++it) {
+        PendingItem pending_item(*it);
+        BlockPtr block = pending_item.block;
+        int iteration_nr = block->get_iteration().get_iteration_nr();
+        int correct_parity =classical_session.channel_correct_parities(iteration_nr, block->get_start_bit_nr(), block->get_end_bit_nr() );
+
+        block->set_correct_parity(correct_parity);
+    }
+}
+
 void Client::service_pending_ask_correct_parity() {
     // Ask Alice for the correct parity for each block on the ask-parity list.
     stats.ask_parity_messages += 1;
     stats.ask_parity_blocks += pending_ask_correct_parity_blocks.size();
     stats.reply_parity_bits += pending_ask_correct_parity_blocks.size();
-    classical_session.ask_correct_parities(pending_ask_correct_parity_blocks);
+    ask_correct_parities(pending_ask_correct_parity_blocks);
 
     // Move all blocks over to the try-correct list.
     while (!pending_ask_correct_parity_blocks.empty()) {

@@ -157,7 +157,7 @@ void Shuffle::cache_add(ShufflePtr shuffle)
     cache[index] = shuffle;
 }
 
-uint64_t Shuffle::get_seed() const
+uint32_t Shuffle::get_seed() const
 {
     return seed;
 }

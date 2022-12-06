@@ -6,6 +6,7 @@
 #include "pending_item.h"
 #include "stats.h"
 #include "mock_classical_session.h"
+#include "algorithm.h"
 #include <map>
 #include <set>
 #include <string>
@@ -13,23 +14,15 @@
 
 namespace Cascade {
 
-    class Algorithm;
-
-    class ClassicalSession;
 
     class Client {
     public:
-     /*   Client(const Algorithm &algorithm,
-                       ClassicalSession &classical_session,
-                       const Key &noisy_key,
-                       double estimated_bit_error_rate,
-                       const Key *correct_key = NULL);*/
+
 
         Client(const Algorithm &algorithm,
                MockClassicalSession &classical_session,
                const Key &noisy_key,
-               double estimated_bit_error_rate,
-               const Key *correct_key);
+               double estimated_bit_error_rate);
 
         ~Client();
 
@@ -39,7 +32,6 @@ namespace Cascade {
 
         Key &get_reconciled_key();
 
-        const Key *get_correct_key() const;
 
         int get_nr_key_bits() const;
 
@@ -74,12 +66,15 @@ namespace Cascade {
         MockClassicalSession &classical_session;
         double estimated_bit_error_rate;
         Key reconciled_key;
-        const Key *correct_key;      // For debugging only
         int nr_key_bits;
         std::vector<IterationPtr> iterations;
         PendingItemQueue pending_ask_correct_parity_blocks;
         PendingItemQueue pending_try_correct_blocks;
         Stats stats;
+        std::map<int, ShuffledKeyPtr> shuffled_keys;
+
+
+        void ask_correct_parities(PendingItemQueue &ask_correct_parity_blocks);
     };
 
 } /* namespace Cascade */
