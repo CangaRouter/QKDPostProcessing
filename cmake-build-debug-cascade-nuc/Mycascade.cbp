@@ -82,22 +82,22 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/tmp/tmp.fvi6RTIkxP/Client.cpp">
+			<Option target="Mycascade"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.fvi6RTIkxP/Client.h">
+			<Option target="Mycascade"/>
+		</Unit>
 		<Unit filename="/tmp/tmp.fvi6RTIkxP/RabbitmqClassicalSession.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
 		<Unit filename="/tmp/tmp.fvi6RTIkxP/RabbitmqClassicalSession.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/tmp/tmp.fvi6RTIkxP/Receiver.cpp">
+		<Unit filename="/tmp/tmp.fvi6RTIkxP/Server.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/tmp/tmp.fvi6RTIkxP/Receiver.h">
-			<Option target="Mycascade"/>
-		</Unit>
-		<Unit filename="/tmp/tmp.fvi6RTIkxP/Sender.cpp">
-			<Option target="Mycascade"/>
-		</Unit>
-		<Unit filename="/tmp/tmp.fvi6RTIkxP/Sender.h">
+		<Unit filename="/tmp/tmp.fvi6RTIkxP/Server.h">
 			<Option target="Mycascade"/>
 		</Unit>
 		<Unit filename="/tmp/tmp.fvi6RTIkxP/algorithm.cpp">
@@ -155,12 +155,6 @@
 			<Option target="Mycascade"/>
 		</Unit>
 		<Unit filename="/tmp/tmp.fvi6RTIkxP/random.h">
-			<Option target="Mycascade"/>
-		</Unit>
-		<Unit filename="/tmp/tmp.fvi6RTIkxP/reconciliation.cpp">
-			<Option target="Mycascade"/>
-		</Unit>
-		<Unit filename="/tmp/tmp.fvi6RTIkxP/reconciliation.h">
 			<Option target="Mycascade"/>
 		</Unit>
 		<Unit filename="/tmp/tmp.fvi6RTIkxP/report.cpp">

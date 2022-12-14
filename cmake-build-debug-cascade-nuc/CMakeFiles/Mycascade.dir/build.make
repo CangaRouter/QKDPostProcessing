@@ -79,18 +79,18 @@ CMakeFiles/Mycascade.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Mycascade.dir/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /tmp/tmp.fvi6RTIkxP/main.cpp -o CMakeFiles/Mycascade.dir/main.cpp.s
 
-CMakeFiles/Mycascade.dir/reconciliation.cpp.o: CMakeFiles/Mycascade.dir/flags.make
-CMakeFiles/Mycascade.dir/reconciliation.cpp.o: ../reconciliation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tmp/tmp.fvi6RTIkxP/cmake-build-debug-cascade-nuc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Mycascade.dir/reconciliation.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Mycascade.dir/reconciliation.cpp.o -c /tmp/tmp.fvi6RTIkxP/reconciliation.cpp
+CMakeFiles/Mycascade.dir/Client.cpp.o: CMakeFiles/Mycascade.dir/flags.make
+CMakeFiles/Mycascade.dir/Client.cpp.o: ../Client.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tmp/tmp.fvi6RTIkxP/cmake-build-debug-cascade-nuc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Mycascade.dir/Client.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Mycascade.dir/Client.cpp.o -c /tmp/tmp.fvi6RTIkxP/Client.cpp
 
-CMakeFiles/Mycascade.dir/reconciliation.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Mycascade.dir/reconciliation.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /tmp/tmp.fvi6RTIkxP/reconciliation.cpp > CMakeFiles/Mycascade.dir/reconciliation.cpp.i
+CMakeFiles/Mycascade.dir/Client.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Mycascade.dir/Client.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /tmp/tmp.fvi6RTIkxP/Client.cpp > CMakeFiles/Mycascade.dir/Client.cpp.i
 
-CMakeFiles/Mycascade.dir/reconciliation.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Mycascade.dir/reconciliation.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /tmp/tmp.fvi6RTIkxP/reconciliation.cpp -o CMakeFiles/Mycascade.dir/reconciliation.cpp.s
+CMakeFiles/Mycascade.dir/Client.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Mycascade.dir/Client.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /tmp/tmp.fvi6RTIkxP/Client.cpp -o CMakeFiles/Mycascade.dir/Client.cpp.s
 
 CMakeFiles/Mycascade.dir/block.cpp.o: CMakeFiles/Mycascade.dir/flags.make
 CMakeFiles/Mycascade.dir/block.cpp.o: ../block.cpp
@@ -274,36 +274,23 @@ CMakeFiles/Mycascade.dir/RabbitmqClassicalSession.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Mycascade.dir/RabbitmqClassicalSession.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /tmp/tmp.fvi6RTIkxP/RabbitmqClassicalSession.cpp -o CMakeFiles/Mycascade.dir/RabbitmqClassicalSession.cpp.s
 
-CMakeFiles/Mycascade.dir/Sender.cpp.o: CMakeFiles/Mycascade.dir/flags.make
-CMakeFiles/Mycascade.dir/Sender.cpp.o: ../Sender.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tmp/tmp.fvi6RTIkxP/cmake-build-debug-cascade-nuc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/Mycascade.dir/Sender.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Mycascade.dir/Sender.cpp.o -c /tmp/tmp.fvi6RTIkxP/Sender.cpp
+CMakeFiles/Mycascade.dir/Server.cpp.o: CMakeFiles/Mycascade.dir/flags.make
+CMakeFiles/Mycascade.dir/Server.cpp.o: ../Server.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tmp/tmp.fvi6RTIkxP/cmake-build-debug-cascade-nuc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/Mycascade.dir/Server.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Mycascade.dir/Server.cpp.o -c /tmp/tmp.fvi6RTIkxP/Server.cpp
 
-CMakeFiles/Mycascade.dir/Sender.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Mycascade.dir/Sender.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /tmp/tmp.fvi6RTIkxP/Sender.cpp > CMakeFiles/Mycascade.dir/Sender.cpp.i
+CMakeFiles/Mycascade.dir/Server.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Mycascade.dir/Server.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /tmp/tmp.fvi6RTIkxP/Server.cpp > CMakeFiles/Mycascade.dir/Server.cpp.i
 
-CMakeFiles/Mycascade.dir/Sender.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Mycascade.dir/Sender.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /tmp/tmp.fvi6RTIkxP/Sender.cpp -o CMakeFiles/Mycascade.dir/Sender.cpp.s
-
-CMakeFiles/Mycascade.dir/Receiver.cpp.o: CMakeFiles/Mycascade.dir/flags.make
-CMakeFiles/Mycascade.dir/Receiver.cpp.o: ../Receiver.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/tmp/tmp.fvi6RTIkxP/cmake-build-debug-cascade-nuc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/Mycascade.dir/Receiver.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Mycascade.dir/Receiver.cpp.o -c /tmp/tmp.fvi6RTIkxP/Receiver.cpp
-
-CMakeFiles/Mycascade.dir/Receiver.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Mycascade.dir/Receiver.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /tmp/tmp.fvi6RTIkxP/Receiver.cpp > CMakeFiles/Mycascade.dir/Receiver.cpp.i
-
-CMakeFiles/Mycascade.dir/Receiver.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Mycascade.dir/Receiver.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /tmp/tmp.fvi6RTIkxP/Receiver.cpp -o CMakeFiles/Mycascade.dir/Receiver.cpp.s
+CMakeFiles/Mycascade.dir/Server.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Mycascade.dir/Server.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /tmp/tmp.fvi6RTIkxP/Server.cpp -o CMakeFiles/Mycascade.dir/Server.cpp.s
 
 # Object files for target Mycascade
 Mycascade_OBJECTS = \
 "CMakeFiles/Mycascade.dir/main.cpp.o" \
-"CMakeFiles/Mycascade.dir/reconciliation.cpp.o" \
+"CMakeFiles/Mycascade.dir/Client.cpp.o" \
 "CMakeFiles/Mycascade.dir/block.cpp.o" \
 "CMakeFiles/Mycascade.dir/algorithm.cpp.o" \
 "CMakeFiles/Mycascade.dir/classical_session.cpp.o" \
@@ -318,14 +305,13 @@ Mycascade_OBJECTS = \
 "CMakeFiles/Mycascade.dir/shuffled_key.cpp.o" \
 "CMakeFiles/Mycascade.dir/stats.cpp.o" \
 "CMakeFiles/Mycascade.dir/RabbitmqClassicalSession.cpp.o" \
-"CMakeFiles/Mycascade.dir/Sender.cpp.o" \
-"CMakeFiles/Mycascade.dir/Receiver.cpp.o"
+"CMakeFiles/Mycascade.dir/Server.cpp.o"
 
 # External object files for target Mycascade
 Mycascade_EXTERNAL_OBJECTS =
 
 Mycascade: CMakeFiles/Mycascade.dir/main.cpp.o
-Mycascade: CMakeFiles/Mycascade.dir/reconciliation.cpp.o
+Mycascade: CMakeFiles/Mycascade.dir/Client.cpp.o
 Mycascade: CMakeFiles/Mycascade.dir/block.cpp.o
 Mycascade: CMakeFiles/Mycascade.dir/algorithm.cpp.o
 Mycascade: CMakeFiles/Mycascade.dir/classical_session.cpp.o
@@ -340,11 +326,10 @@ Mycascade: CMakeFiles/Mycascade.dir/shuffle.cpp.o
 Mycascade: CMakeFiles/Mycascade.dir/shuffled_key.cpp.o
 Mycascade: CMakeFiles/Mycascade.dir/stats.cpp.o
 Mycascade: CMakeFiles/Mycascade.dir/RabbitmqClassicalSession.cpp.o
-Mycascade: CMakeFiles/Mycascade.dir/Sender.cpp.o
-Mycascade: CMakeFiles/Mycascade.dir/Receiver.cpp.o
+Mycascade: CMakeFiles/Mycascade.dir/Server.cpp.o
 Mycascade: CMakeFiles/Mycascade.dir/build.make
 Mycascade: CMakeFiles/Mycascade.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/tmp/tmp.fvi6RTIkxP/cmake-build-debug-cascade-nuc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable Mycascade"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/tmp/tmp.fvi6RTIkxP/cmake-build-debug-cascade-nuc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Linking CXX executable Mycascade"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Mycascade.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

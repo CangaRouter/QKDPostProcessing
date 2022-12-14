@@ -7,6 +7,7 @@
 namespace Cascade {
 
     Server::Server(Key &correctKey, bool cacheShuffles) : correct_key(correctKey), cache_shuffles(cacheShuffles) {
+        //TODO insert a classical session interface to allow server  to open the connection
 
 
     }

@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Mycascade.dir/Client.cpp.o"
   "CMakeFiles/Mycascade.dir/RabbitmqClassicalSession.cpp.o"
-  "CMakeFiles/Mycascade.dir/Receiver.cpp.o"
-  "CMakeFiles/Mycascade.dir/Sender.cpp.o"
+  "CMakeFiles/Mycascade.dir/Server.cpp.o"
   "CMakeFiles/Mycascade.dir/algorithm.cpp.o"
   "CMakeFiles/Mycascade.dir/block.cpp.o"
   "CMakeFiles/Mycascade.dir/classical_session.cpp.o"
@@ -12,7 +12,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/Mycascade.dir/mock_classical_session.cpp.o"
   "CMakeFiles/Mycascade.dir/pending_item.cpp.o"
   "CMakeFiles/Mycascade.dir/random.cpp.o"
-  "CMakeFiles/Mycascade.dir/reconciliation.cpp.o"
   "CMakeFiles/Mycascade.dir/report.cpp.o"
   "CMakeFiles/Mycascade.dir/shuffle.cpp.o"
   "CMakeFiles/Mycascade.dir/shuffled_key.cpp.o"

@@ -129,6 +129,30 @@ Mycascade/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/build
 .PHONY : Mycascade/fast
 
+Client.o: Client.cpp.o
+.PHONY : Client.o
+
+# target to build an object file
+Client.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/Client.cpp.o
+.PHONY : Client.cpp.o
+
+Client.i: Client.cpp.i
+.PHONY : Client.i
+
+# target to preprocess a source file
+Client.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/Client.cpp.i
+.PHONY : Client.cpp.i
+
+Client.s: Client.cpp.s
+.PHONY : Client.s
+
+# target to generate assembly for a file
+Client.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/Client.cpp.s
+.PHONY : Client.cpp.s
+
 RabbitmqClassicalSession.o: RabbitmqClassicalSession.cpp.o
 .PHONY : RabbitmqClassicalSession.o
 
@@ -153,53 +177,29 @@ RabbitmqClassicalSession.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/RabbitmqClassicalSession.cpp.s
 .PHONY : RabbitmqClassicalSession.cpp.s
 
-Receiver.o: Receiver.cpp.o
-.PHONY : Receiver.o
+Server.o: Server.cpp.o
+.PHONY : Server.o
 
 # target to build an object file
-Receiver.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/Receiver.cpp.o
-.PHONY : Receiver.cpp.o
+Server.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/Server.cpp.o
+.PHONY : Server.cpp.o
 
-Receiver.i: Receiver.cpp.i
-.PHONY : Receiver.i
-
-# target to preprocess a source file
-Receiver.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/Receiver.cpp.i
-.PHONY : Receiver.cpp.i
-
-Receiver.s: Receiver.cpp.s
-.PHONY : Receiver.s
-
-# target to generate assembly for a file
-Receiver.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/Receiver.cpp.s
-.PHONY : Receiver.cpp.s
-
-Sender.o: Sender.cpp.o
-.PHONY : Sender.o
-
-# target to build an object file
-Sender.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/Sender.cpp.o
-.PHONY : Sender.cpp.o
-
-Sender.i: Sender.cpp.i
-.PHONY : Sender.i
+Server.i: Server.cpp.i
+.PHONY : Server.i
 
 # target to preprocess a source file
-Sender.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/Sender.cpp.i
-.PHONY : Sender.cpp.i
+Server.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/Server.cpp.i
+.PHONY : Server.cpp.i
 
-Sender.s: Sender.cpp.s
-.PHONY : Sender.s
+Server.s: Server.cpp.s
+.PHONY : Server.s
 
 # target to generate assembly for a file
-Sender.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/Sender.cpp.s
-.PHONY : Sender.cpp.s
+Server.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/Server.cpp.s
+.PHONY : Server.cpp.s
 
 algorithm.o: algorithm.cpp.o
 .PHONY : algorithm.o
@@ -441,30 +441,6 @@ random.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/random.cpp.s
 .PHONY : random.cpp.s
 
-reconciliation.o: reconciliation.cpp.o
-.PHONY : reconciliation.o
-
-# target to build an object file
-reconciliation.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/reconciliation.cpp.o
-.PHONY : reconciliation.cpp.o
-
-reconciliation.i: reconciliation.cpp.i
-.PHONY : reconciliation.i
-
-# target to preprocess a source file
-reconciliation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/reconciliation.cpp.i
-.PHONY : reconciliation.cpp.i
-
-reconciliation.s: reconciliation.cpp.s
-.PHONY : reconciliation.s
-
-# target to generate assembly for a file
-reconciliation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/reconciliation.cpp.s
-.PHONY : reconciliation.cpp.s
-
 report.o: report.cpp.o
 .PHONY : report.o
 
@@ -570,15 +546,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Mycascade"
+	@echo "... Client.o"
+	@echo "... Client.i"
+	@echo "... Client.s"
 	@echo "... RabbitmqClassicalSession.o"
 	@echo "... RabbitmqClassicalSession.i"
 	@echo "... RabbitmqClassicalSession.s"
-	@echo "... Receiver.o"
-	@echo "... Receiver.i"
-	@echo "... Receiver.s"
-	@echo "... Sender.o"
-	@echo "... Sender.i"
-	@echo "... Sender.s"
+	@echo "... Server.o"
+	@echo "... Server.i"
+	@echo "... Server.s"
 	@echo "... algorithm.o"
 	@echo "... algorithm.i"
 	@echo "... algorithm.s"
@@ -609,9 +585,6 @@ help:
 	@echo "... random.o"
 	@echo "... random.i"
 	@echo "... random.s"
-	@echo "... reconciliation.o"
-	@echo "... reconciliation.i"
-	@echo "... reconciliation.s"
 	@echo "... report.o"
 	@echo "... report.i"
 	@echo "... report.s"

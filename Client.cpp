@@ -1,7 +1,7 @@
 #include "Client.h"
 #include "algorithm.h"
 #include "debug.h"
-#include "mock_classical_session.h"
+#include "classical_session.h"
 #include <cassert>
 #include <cmath>
 #include <ctime>
@@ -10,7 +10,7 @@ using namespace Cascade;
 
 
 Client::Client(const Algorithm &algorithm,
-               MockClassicalSession &classical_session,
+               ClassicalSession &classical_session,
                const Key &noisy_key,
                double estimated_bit_error_rate) :
                                algorithm(algorithm),

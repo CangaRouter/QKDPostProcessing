@@ -3,7 +3,7 @@
 #include "debug.h"
 //#include "experiments.h"
 #include "key.h"
-#include "mock_classical_session.h"
+#include "classical_session.h"
 //#include "options.h"
 #include "random.h"
 #include "report.h"
@@ -48,11 +48,10 @@ int main(int argc, char** argv) {
             Key noisy_key = correct_key;
             double bit_error_rate = 0.6;
             noisy_key.apply_noise(bit_error_rate);
-            MockClassicalSession classical_session(correct_key, algorithm->cache_shuffles,
-                                                   Server(correct_key, false));
-            Client reconciliation(*algorithm, classical_session, noisy_key, bit_error_rate);
-            reconciliation.reconcile();
-            Key& reconciled_key = reconciliation.get_reconciled_key();
+            MockClassicalSession classical_session(Server(correct_key, false));
+            Client client(*algorithm, classical_session, noisy_key, bit_error_rate);
+            client.reconcile();
+            Key& reconciled_key = client.get_reconciled_key();
             std::cout<<"Differencies: "<<correct_key.nr_bits_different(reconciled_key);
             //ASSERT_EQ(correct_key.nr_bits_different(reconciled_key), 0);
             return 0;

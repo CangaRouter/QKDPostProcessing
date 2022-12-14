@@ -20,7 +20,7 @@ namespace Cascade {
 
 
         Client(const Algorithm &algorithm,
-               MockClassicalSession &classical_session,
+               ClassicalSession &classical_session,
                const Key &noisy_key,
                double estimated_bit_error_rate);
 
@@ -63,7 +63,7 @@ namespace Cascade {
         void start_iteration_common(int iteration_nr, bool biconf);
 
         const Algorithm &algorithm;
-        MockClassicalSession &classical_session;
+        ClassicalSession &classical_session; //generic interface
         double estimated_bit_error_rate;
         Key reconciled_key;
         int nr_key_bits;
