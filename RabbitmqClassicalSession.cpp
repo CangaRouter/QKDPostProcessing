@@ -10,7 +10,7 @@
 
 using namespace Cascade;
 
-RabbitmqClassicalSession::RabbitmqClassicalSession(std::string queue, std::string exchange,
+RabbitmqClassicalSession::RabbitmqClassicalSession(std::string queue,
                                                    std::string host, std::string port) : queue(std::move(queue)),
                                                                                                        exchange(std::move(
                                                                                                                exchange)),
@@ -22,15 +22,31 @@ RabbitmqClassicalSession::~RabbitmqClassicalSession() {
 }
 
 void RabbitmqClassicalSession::start_iteration_with_shuffle_seed(int iteration_nr, uint32_t shuffle_seed) {
-    AMQP amqp(host+":"+port);
+    AMQP amqp("localhost:5672");
 
 
-    AMQPExchange * ex = amqp.createExchange(exchange);
-    ex->Declare(exchange, "fanout");
 
-    AMQPQueue * qu2 = amqp.createQueue(queue);
-    qu2->Declare();
-    qu2->Bind( exchange, "");
+    AMQPExchange * client = amqp.createExchange("client");
+    client->Declare("client","direct");
+    AMQPQueue * replyQueue = amqp.createQueue("reply");
+    AMQPQueue * requestQueue= amqp.createQueue("request");
+    replyQueue->Declare();
+    requestQueue->Declare();
+    requestQueue->Bind("client","request");
+
+    client->setHeader("correlation_id","ghei" );
+    client->setHeader("Reply-to","reply");
+    client->setHeader("Delivery-mode",AMQP_DELIVERY_PERSISTENT);
+    client->setHeader("Content-type", "text/text");
+    client->setHeader("Content-encoding", "UTF-8");
+
+    client->Publish( "reply pls" , "request");
+
+    replyQueue->setConsumerTag("tag_RPC");
+    replyQueue->addEvent(AMQP_MESSAGE, onMessage );
+
+    replyQueue->Consume(AMQP_NOACK);
+
 
 
 
@@ -45,7 +61,7 @@ int RabbitmqClassicalSession::channel_correct_parities(int iterationNr, int star
     AMQP amqp(host+":"+port);
 
 
-    AMQPExchange * client = amqp.createExchange(exchange);
+     AMQPExchange * client = amqp.createExchange(exchange);
     AMQPQueue * replyQueue = amqp.createQueue("");
     client->Declare(exchange,"direct");
     replyQueue->Declare();
@@ -56,8 +72,7 @@ int RabbitmqClassicalSession::channel_correct_parities(int iterationNr, int star
     int correlation=9;
 
     client->setHeader("correlationID",correlation );
-    client->setHeader("Delivery-mode", 2);
-
+    client->setHeader("Delivery-mode", AMQP_DELIVERY_PERSISTENT);
     client->setHeader("Content-type", "text/text");
     client->setHeader("Content-encoding", "UTF-8");
 
