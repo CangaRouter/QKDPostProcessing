@@ -18,12 +18,12 @@ Client::Client(const Algorithm &algorithm,
                                estimated_bit_error_rate(estimated_bit_error_rate),
                                reconciled_key(noisy_key),
                                nr_key_bits(noisy_key.get_nr_bits()) {
-    std::cout<<noisy_key.to_string()<<std::endl; //for debug
+
 
 }
 
 Client::~Client() {
-    DEBUG("End reconciliation");
+
 }
 
 const Algorithm &Client::get_algorithm() const {
@@ -94,6 +94,7 @@ void Client::reconcile() {
     long reconciliation_bits = stats.start_iteration_bits + stats.ask_parity_bits +
                                stats.reply_parity_bits;
     stats.realistic_efficiency = compute_efficiency(reconciliation_bits);
+    classical_session.closeConnection();
 }
 
 void Client::all_normal_cascade_iterations() {
@@ -201,7 +202,6 @@ void Client::ask_correct_parities(PendingItemQueue &ask_correct_parity_blocks) {
         BlockPtr block = pending_item.block;
         int iteration_nr = block->get_iteration().get_iteration_nr();
         int correct_parity =classical_session.channel_correct_parities(iteration_nr, block->get_start_bit_nr(), block->get_end_bit_nr() );
-
         block->set_correct_parity(correct_parity);
     }
 }

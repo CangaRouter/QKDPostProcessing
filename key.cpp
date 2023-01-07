@@ -111,13 +111,12 @@ int Key::get_nr_bits() const
     return nr_bits;
 }
 
-int Key::get_bit(int bit_nr) const
+bool Key::get_bit(int bit_nr) const
 {
-    assert(bit_nr < nr_bits);
     int word_nr = bit_nr / 64;
-    int bit_nr_in_word = bit_nr % 64;
-    uint64_t mask = 1ull << bit_nr_in_word;
-    return (words[word_nr] & mask) ? 1 : 0;
+    int bit_in_word_nr = bit_nr % 64;
+    uint64_t mask = 1ull << bit_in_word_nr;
+    return words[word_nr] & mask;
 }
 
 void Key::set_bit(int bit_nr, int value)
@@ -196,17 +195,24 @@ int Key::nr_bits_different(const Key& other_key) const
 
 }
 
-static Key parseKey(std::string key ){
-    int nr_bits=key.length();
-    int nrWords = (nr_bits - 1) / 64 + 1;
-    uint64_t *words = new uint64_t[nrWords];
-    for (int word_nr = 0; word_nr/64 < nrWords; word_nr+=64) {
-        words[word_nr/64] = uint64_t(stoi(key.substr(word_nr,word_nr+32))) << 32 | stoi(key.substr(word_nr+32,word_nr+64));
+
+
+Key Key::parseKey(std::string key) //TODO fix this
+{
+    int nrBits = key.size();
+    int nr_words = (nrBits - 1) / 64 + 1;
+     uint64_t *words = new uint64_t[nr_words];
+    for (int word_nr = 0; word_nr *64< nrBits; word_nr += 1) {
+        int len = std::min(64, nrBits - word_nr*64);
+        std::string word = key.substr(word_nr*64, len);
+        uint64_t value = stoull(word, nullptr, 2);
+        words[word_nr ] = value;
     }
-    words[nrWords - 1] &= end_word_mask(nr_bits - 1);
-    Key newKey(nr_bits, nrWords, words);
+    words[nr_words - 1] &= end_word_mask(nrBits - 1);
+    Key newKey(nrBits,nr_words,words);
     return newKey;
 }
+
 Key::Key(int nrBits, int nrWords, uint64_t *words) : nr_bits(nrBits), nr_words(nrWords), words(words) {
 
 

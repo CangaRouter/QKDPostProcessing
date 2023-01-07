@@ -18,7 +18,7 @@ namespace Cascade {
         static Key parseKey(std::string key);
         std::string to_string() const;
         int get_nr_bits() const;
-        int get_bit(int bit_nr) const;
+        bool get_bit(int bit_nr) const;
         void set_bit(int bit_nr, int value);
         void flip_bit(int bit_nr);
         void apply_noise(double bit_error_rate);

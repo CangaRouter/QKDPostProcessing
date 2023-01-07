@@ -22,11 +22,11 @@ namespace Cascade {
 
          int channel_correct_parities(int iterationNr, int startBit, int endBit) override;
 
+        void closeConnection() override;
 
-        void test (int deltas);
 
     private:
-                Server server;
+                Server fakeServer;
     };
 
 } /* namespace Cascade */

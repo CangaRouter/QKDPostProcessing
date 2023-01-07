@@ -10,6 +10,8 @@
 #include "stats.h"
 #include "classical_session.h"
 #include <map>
+#include <amqpcpp.h>
+#include "conn_handler.h"
 namespace Cascade {
 
 
@@ -17,10 +19,8 @@ namespace Cascade {
     class RabbitmqClassicalSession   : public ClassicalSession
             {
             public:
-                explicit RabbitmqClassicalSession(Server server);
 
-        RabbitmqClassicalSession(std::string queue, std::string exchange, std::string host,
-                                 std::string port);
+        RabbitmqClassicalSession(std::string host, int port, std::string user, std::string pw);
 
         ~RabbitmqClassicalSession() override;
 
@@ -28,15 +28,19 @@ namespace Cascade {
 
                 int channel_correct_parities(int iterationNr, int startBit, int endBit) override;
 
+        void closeConnection() override;
 
-                void test (int deltas);
 
-            private:
-                const std::string queue;
-                const std::string exchange;
-                const std::string host;
-                const std::string port;
-            };
+    private:
+        std::string host;
+        int port;
+        std::string user;
+        std::string pw;
+        AMQP::TcpConnection* connection;
+        ConnHandler handler;
+        AMQP::TcpChannel* channel;
+
+    };
 
 } /* namespace Cascade */
 

@@ -8,14 +8,14 @@
 
 
 namespace Cascade {
-
     class ClassicalSession
             {
             public:
                 virtual ~ClassicalSession() = 0;
-                virtual void start_iteration_with_shuffle_seed(int iteration_nr, uint32_t shuffle_seed) =0;
-                virtual int channel_correct_parities(int iterationNr, int startBit, int endBit) =0 ;
-            };
+                virtual void start_iteration_with_shuffle_seed(int , uint32_t ) =0;
+                virtual int channel_correct_parities(int , int , int ) =0 ;
+                virtual void closeConnection()=0;
+    };
 
 } /* namespace Cascade */
 

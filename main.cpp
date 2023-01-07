@@ -9,6 +9,7 @@
 #include "report.h"
 #include "Client.h"
 #include "Server.h"
+#include "RabbitmqClassicalSession.h"
 //#include "series.h"
 //#include <boost/filesystem.hpp>
 #include <cerrno>
@@ -23,42 +24,87 @@
 #include <cassert>
 
 using namespace Cascade;
-int main(int argc, char** argv) {
-    if(argc!=4)
-    {
+
+int main(int argc, char **argv) {
+    if (argc != 6) {
         std::perror("Wrong number of arguments");
     }
+    if (strcmp(argv[1], "network") == 0) {
+        std::string fileName = argv[5];
 
-        char* algorithm_name=argv[2];
-        int seed; //=atoi(argv[1]);
-        const Algorithm* algorithm = Algorithm::get_by_name(algorithm_name);
-        set_random_uint32_seed(seed);
-        Key correct_key(seed);
-        //ClassicalSession classical_session(correct_key, algorithm->cache_shuffles, "localhost","5672","e","q2");
+        char *algorithm_name = argv[3];
+        int size = atoi(argv[2]);
+        const Algorithm *algorithm = Algorithm::get_by_name(algorithm_name);
 
-        if (strcmp(argv[3],"sender")==0){
-            Server sender();
-            //ASSERT_EQ(correct_key.nr_bits_different(reconciled_key), 0);
+
+        if (strcmp(argv[4], "server") == 0) {
+            Key correct_key = Cascade::Key(size);
+            std::cout << correct_key.to_string() << std::endl;
+
+
+            std::ofstream tmp_file("/tmp/" + fileName);
+            if (!tmp_file.is_open()) {
+                // Handle error opening the file
+                return 1;
+            }
+
+            // Write the string to the temporary file
+            tmp_file << correct_key.to_string();
+
+            // Close the file
+            tmp_file.close();
+            Server server(correct_key, false, "localhost", 5672, "guest", "guest");
             return 0;
-        }
-        else if (strcmp(argv[3],"receiver")==0){
-            set_random_uint32_seed(seed);
-            Key correct_key(10000);
-            std::cout<<correct_key.to_string()<<std::endl;
+        } else if (strcmp(argv[4], "client") == 0) {
+            std::string key;
+            std::ifstream tmpFile("/tmp/" + fileName);
+            if (tmpFile.is_open()) {
+                tmpFile >> key;
+                tmpFile.close();
+            }
+            Key correct_key = Cascade::Key::parseKey(key);
+            std::cout <<"this is the parsed key: "<< key << std::endl;
+            std::cout <<"and this is the parsed key: "<< correct_key.to_string() << std::endl;
+
             Key noisy_key = correct_key;
             double bit_error_rate = 0.6;
             noisy_key.apply_noise(bit_error_rate);
-            MockClassicalSession classical_session(Server(correct_key, false));
+            RabbitmqClassicalSession classical_session("localhost", 5672, "guest", "guest");
             Client client(*algorithm, classical_session, noisy_key, bit_error_rate);
             client.reconcile();
-            Key& reconciled_key = client.get_reconciled_key();
-            std::cout<<"Differencies: "<<correct_key.nr_bits_different(reconciled_key);
-            //ASSERT_EQ(correct_key.nr_bits_different(reconciled_key), 0);
+            Key &reconciled_key = client.get_reconciled_key();
+            std::cout << "Differencies: " << correct_key.nr_bits_different(reconciled_key);
             return 0;
+        } else {
+            std::cout << "Argument 3 must be either 'sender' or 'receiver'" << std::endl;
         }
-        else{
-            std::cout<<"Argument 3 must be either 'sender' or 'receiver'"<<std::endl;
-        }
+
+    } else {
+        std::string fileName = argv[5];
+
+        char *algorithm_name = argv[3];
+        int size = atoi(argv[2]);
+        const Algorithm *algorithm = Algorithm::get_by_name(algorithm_name);
+
+
+        Key correct_key = Cascade::Key(size);
+
+        std::cout << correct_key.to_string() << std::endl;
+        std::string keyy=correct_key.to_string();
+
+        Key noisy_key = Key::parseKey(keyy);
+        double bit_error_rate = 0.1;
+        noisy_key.apply_noise(bit_error_rate);
+        std::cout << noisy_key.to_string() << std::endl;
+        MockClassicalSession classical_session(Server(correct_key, false));
+        Client client(*algorithm, classical_session, noisy_key, bit_error_rate);
+        client.reconcile();
+        Key &reconciled_key = client.get_reconciled_key();
+        std::cout << "Differencies: " << correct_key.nr_bits_different(reconciled_key);
+        return 0;
+
+
+    }
 
 
     /*int key_size= atoi(argv[1]);

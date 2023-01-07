@@ -5,124 +5,77 @@
 #include "RabbitmqClassicalSession.h"
 
 #include <utility>
-#include "AMQPcpp.h"
+#include <amqpcpp.h>
+#include <sstream>
 
 
 using namespace Cascade;
 
-RabbitmqClassicalSession::RabbitmqClassicalSession(std::string queue,
-                                                   std::string host, std::string port) : queue(std::move(queue)),
-                                                                                                       exchange(std::move(
-                                                                                                               exchange)),
-                                                                                                       host(std::move(host)),
-                                                                                                       port(std::move(port)) {}
+RabbitmqClassicalSession::RabbitmqClassicalSession(std::string host, int port, std::string user, std::string pw)
+: host(host), port(port), user(user), pw(pw)
+{
+    connection = new AMQP::TcpConnection(handler,
+                                          AMQP::Address(host, port, AMQP::Login(user, pw), "/"));
+    channel = new AMQP::TcpChannel(connection);
+    channel->onError([=](const char* message)
+                      {
+                          std::cout << "Channel error: " << message << std::endl;
+                          handler.Stop();
+                      });
+    channel->setQos(1);
+    channel->declareQueue("clientQueue");
+
+
+}
 
 RabbitmqClassicalSession::~RabbitmqClassicalSession() {
 
 }
 
+
+void RabbitmqClassicalSession::closeConnection() {
+    channel->cancel("alfredo");
+    connection->close();
+}
+
 void RabbitmqClassicalSession::start_iteration_with_shuffle_seed(int iteration_nr, uint32_t shuffle_seed) {
-    AMQP amqp("localhost:5672");
+    AMQP::Table headers;
+    std::string body="cascade";
+    headers.set("startIterationWithSeed",std::to_string(shuffle_seed));
+    headers.set("nIteration",iteration_nr);
 
-
-
-    AMQPExchange * client = amqp.createExchange("client");
-    client->Declare("client","direct");
-    AMQPQueue * replyQueue = amqp.createQueue("reply");
-    AMQPQueue * requestQueue= amqp.createQueue("request");
-    replyQueue->Declare();
-    requestQueue->Declare();
-    requestQueue->Bind("client","request");
-
-    client->setHeader("correlation_id","ghei" );
-    client->setHeader("Reply-to","reply");
-    client->setHeader("Delivery-mode",AMQP_DELIVERY_PERSISTENT);
-    client->setHeader("Content-type", "text/text");
-    client->setHeader("Content-encoding", "UTF-8");
-
-    client->Publish( "reply pls" , "request");
-
-    replyQueue->setConsumerTag("tag_RPC");
-    replyQueue->addEvent(AMQP_MESSAGE, onMessage );
-
-    replyQueue->Consume(AMQP_NOACK);
-
-
-
-
-
-
-
+    AMQP::Envelope env(body.c_str(),body.size());
+    env.setHeaders(headers);
+    channel->publish("","serverQueue",env);
 
 }
 
 int RabbitmqClassicalSession::channel_correct_parities(int iterationNr, int startBit, int endBit) {
+    std::string correlationId=std::to_string(iterationNr)+","+std::to_string(startBit)+","+std::to_string(endBit) ;
+    AMQP::Table headers;
+    headers.set("startBit",startBit);
+    headers.set("endBit",endBit);
+    headers.set("nIteration",iterationNr);
+    AMQP::Envelope env("",0);
+    env.setCorrelationID(correlationId);
+    env.setReplyTo("clientQueue");
+    env.setHeaders(headers);
+    channel->publish("", "serverQueue", env);
+    int response = -1;
+    channel->consume("clientQueue",AMQP::noack)
+            .onReceived([&](const AMQP::Message& m, uint64_t, bool)
+                        {
+                            if (m.correlationID() != correlationId)
+                                return; // just skip it
 
-    AMQP amqp(host+":"+port);
-
-
-     AMQPExchange * client = amqp.createExchange(exchange);
-    AMQPQueue * replyQueue = amqp.createQueue("");
-    client->Declare(exchange,"direct");
-    replyQueue->Declare();
-    replyQueue->Bind(exchange,"reply");
-    AMQPQueue * requestQueue= amqp.createQueue(queue);
-    requestQueue->Declare();
-    replyQueue->Bind(exchange,"request");
-    int correlation=9;
-
-    client->setHeader("correlationID",correlation );
-    client->setHeader("Delivery-mode", AMQP_DELIVERY_PERSISTENT);
-    client->setHeader("Content-type", "text/text");
-    client->setHeader("Content-encoding", "UTF-8");
-
-
-    return 0;
+                            response = m.headers().get("parity");
+                            handler.Stop();
+                        });
+    handler.Start();
+    return response;
 }
 
-void RabbitmqClassicalSession::test (int deltas){
-    try {
-        //		AMQP amqp;
-        //		AMQP amqp(AMQPDEBUG);
-
-        AMQP amqp(host+":"+port);		// all connect string
-
-        AMQPExchange * ex = amqp.createExchange(exchange);
-        ex->Declare(exchange, "fanout");
-
-        AMQPQueue * qu2 = amqp.createQueue(queue);
-        qu2->Declare();
-        qu2->Bind( exchange, "");
-
-        std::string ss = "Differencies:  " + std::to_string(deltas);
-        /* test very long message
-        ss = ss+ss+ss+ss+ss+ss+ss;
-        ss += ss+ss+ss+ss+ss+ss+ss;
-        ss += ss+ss+ss+ss+ss+ss+ss;
-        ss += ss+ss+ss+ss+ss+ss+ss;
-        ss += ss+ss+ss+ss+ss+ss+ss;
-*/
-
-        ex->setHeader("Delivery-mode", 2);
-        ex->setHeader("Content-type", "text/text");
-        ex->setHeader("Content-encoding", "UTF-8");
-
-        ex->Publish(  ss , ""); // publish very long message
-
-        ex->
-        //ex->Publish(  "message 2 " , "");
-        //  ex->Publish(  "message 3 " , "");
 
 
-        /*  if (argc==2) {
-              AMQPQueue * qu = amqp.createQueue();
-              qu->Cancel(   amqp_cstring_bytes(argv[1]) );
-          }*/
-
-    } catch (AMQPException e) {
-        std::cout << e.getMessage() << std::endl;
-    }
-
-}
 
 
