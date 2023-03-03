@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: ${USR}
+      RABBITMQ_DEFAULT_PASS: ${PW}
+    ports:
+          - "${PORT}:${PORT}"
+          - "${MAN_PORT}:${MAN_PORT}"
+
+  server:
+    build:
+      context: .
+      dockerfile: server_dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_started
+    command: [ "python3", "./wapper.py", "server" ]
+
+  client:
+    build:
+      context: .
+      dockerfile: client_dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_started
+    command: [ "python3", "./wapper.py", "client" ]

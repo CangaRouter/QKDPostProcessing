@@ -1,0 +1,20 @@
+FROM ubuntu:latest
+RUN apt-get update
+RUN apt-get install -y build-essential cmake libboost-dev libboost-system-dev libboost-thread-dev libevent-dev librabbitmq-dev git python3 pip
+RUN git clone https://github.com/CopernicaMarketingSoftware/AMQP-CPP.git && \
+    cd AMQP-CPP && \
+    mkdir build &&\
+    cd build &&\
+    cmake .. -DAMQP-CPP_BUILD_SHARED=ON -DAMQP-CPP_LINUX_TCP=ON &&\
+    cmake --build . --target install
+WORKDIR /Server
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+RUN ldconfig
+COPY . .
+RUN cmake .
+RUN make
+
+
