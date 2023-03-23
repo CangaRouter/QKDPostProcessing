@@ -11,6 +11,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Mycascade.dir/block.cpp.o.d"
   "CMakeFiles/Mycascade.dir/classical_session.cpp.o"
   "CMakeFiles/Mycascade.dir/classical_session.cpp.o.d"
+  "CMakeFiles/Mycascade.dir/data_point.cpp.o"
+  "CMakeFiles/Mycascade.dir/data_point.cpp.o.d"
   "CMakeFiles/Mycascade.dir/debug.cpp.o"
   "CMakeFiles/Mycascade.dir/debug.cpp.o.d"
   "CMakeFiles/Mycascade.dir/iteration.cpp.o"

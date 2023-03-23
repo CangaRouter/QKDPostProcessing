@@ -13,6 +13,8 @@
 #include "classical_session.h"
 #include <amqpcpp.h>
 #include "conn_handler.h"
+#include <boost/algorithm/string.hpp>
+
 
 namespace Cascade {
     class Server {
@@ -44,6 +46,10 @@ namespace Cascade {
 
         double getNoise() const;
 
+        const std::string &getTag() const;
+
+        void setTag(const std::string &tag);
+
     private:
         void serverLoop();
 
@@ -55,8 +61,14 @@ namespace Cascade {
         std::string user;
         std::string pw;
         double noise;
+        std::string tag = std::to_string(rand());
 
 
+        void initialization(AMQP::TcpChannel *channel, const AMQP::Message &message) const;
+
+        void closingConnection(ConnHandler *handler, AMQP::TcpChannel *channel, const AMQP::Message &message) const;
+
+        void rpcRound(AMQP::TcpChannel *channel, const AMQP::Message &message, const AMQP::Table &receivedHeaders);
     };
 
 } // Cascade

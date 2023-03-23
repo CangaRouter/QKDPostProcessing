@@ -14,8 +14,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN ldconfig
 COPY . .
-RUN cmake .
+RUN cmake ./ErrorCorrection
 RUN make
 
-# ["./Mycascade", "network","100", "original", "client", "0.6","rabbitmq","${PORT}","${USR}","${PW}"]
 
+
+# ["./Mycascade", "network","100", "original", "client", "0.6","rabbitmq","${PORT}","${USR}","${PW}"]

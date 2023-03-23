@@ -6,7 +6,7 @@
 #include "shuffle.h"
 #include "key.h"
 #include <stdint.h>
-
+#include "block.h"
 
 namespace Cascade {
     class ClassicalSession
@@ -14,8 +14,8 @@ namespace Cascade {
             public:
                 virtual ~ClassicalSession() = 0;
                 virtual void start_iteration_with_shuffle_seed(int , uint32_t ) =0;
-                virtual int channel_correct_parities(int , int , int ) =0 ;
-                virtual void closeConnection()=0;
+                virtual int* channel_correct_parities(int *, int* , int*,int ) =0 ;
+                virtual Key closeConnection()=0;
                 virtual Key initialization()=0;
     };
 

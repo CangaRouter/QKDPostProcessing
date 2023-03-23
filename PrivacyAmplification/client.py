@@ -93,23 +93,22 @@ def on_request(ch, method, props, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
-def start_client(key):
+def start_client(key,port,usr,psw,host,M,N,lenght):
     """
     Main function that sets up the RabbitMQ connection and starts the consumer.
     """
-    seed = np.random.randint(2, size=8)
+    seed = np.random.randint(2, size=N)
     intKey=[int (x,2)  for x in key]
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    credentials=pika.PlainCredentials(usr,psw)
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=host,port=port,credentials=credentials))
     channel = connection.channel()
-    K=65
-    M=16
-    N=8
+    K=math.ceil(lenght/M)
     newKey=privacy_amplification(intKey,K,M,N,seed)
   #  channel.queue_declare(queue='clientQueue')
     channel.basic_publish(exchange='',
                           routing_key='serverQueue',
                           properties=pika.BasicProperties(
-                              headers={'K': K , 'M': M, 'N': N, 'seed': str(seed)}  # Add a key/value header
+                              headers={'K': K ,'M': M,  'N': N, 'seed': "".join([str(x) for x in seed])}  # Add a key/value header
                           ),
                           body='init PA')
     #channel.basic_consume(queue='clientQueue', on_message_callback=on_request)

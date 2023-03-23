@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace Cascade {
 
@@ -12,7 +13,7 @@ namespace Cascade {
         Key(int nr_bits);
         Key(const Key& key);
 
-        Key(int nrBits, int nrWords, uint64_t *words);
+        Key(int nrBits, int nrWords,std::vector< uint64_t>words);
 
         ~Key();
         static Key parseKey(std::string key);
@@ -28,7 +29,15 @@ namespace Cascade {
     private:
         int nr_bits;
         int nr_words;
-        uint64_t *words;
+        std::vector<uint64_t> words;
+    public:
+        int getNrWords() const;
+
+       std::vector< uint64_t >getWords() const;
+
+        void setNrWords(int nrWords);
+
+        void setWords(std::vector<uint64_t >words);
     };
 
     typedef std::shared_ptr<Key> KeyPtr;

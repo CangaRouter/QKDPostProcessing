@@ -59,8 +59,9 @@ def update(CA):
    #                  body=response)
     #ch.basic_ack(delivery_tag = method.delivery_tag)
 
-def start_server(key):
-     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+def start_server(key,port,usr,psw,host):
+     credentials = pika.PlainCredentials(usr, psw)
+     connection = pika.BlockingConnection(pika.ConnectionParameters(host=host,port=port,credentials=credentials))
      channel = connection.channel()
      intKey = [int (x,2)  for x in key]
      channel.queue_declare(queue='serverQueue')
@@ -77,8 +78,6 @@ def on_request(method, props, body,key):
     K=int(props.headers['K'])
     M=int(props.headers['M'])
     N=int(props.headers['N'])
-    seed=[int (x,2)  for x in props.headers['seed'][1:len(props.headers['seed'])-1].split()]
-
-
+    seed=[int (x,2)  for x in props.headers['seed']]
     response = privacy_amplification(key, K, M,N,seed)
     print('Server sifted key: ', response, 'len:', len(response))

@@ -26,9 +26,9 @@ namespace Cascade {
 
                 void start_iteration_with_shuffle_seed(int iteration_nr, uint32_t shuffle_seed) override;
 
-                int channel_correct_parities(int iterationNr, int startBit, int endBit) override;
+                int *channel_correct_parities(int *iterationNr, int *startBit, int *endBit, int nBlocks) override;
 
-        void closeConnection() override;
+        Key closeConnection() override;
         Key initialization() override;
 
 
@@ -41,6 +41,7 @@ namespace Cascade {
         AMQP::TcpConnection* connection;
         ConnHandler handler;
         AMQP::TcpChannel* channel;
+        std::string tag;
 
     };
 

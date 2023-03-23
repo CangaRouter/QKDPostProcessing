@@ -273,6 +273,30 @@ classical_session.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/classical_session.cpp.s
 .PHONY : classical_session.cpp.s
 
+data_point.o: data_point.cpp.o
+.PHONY : data_point.o
+
+# target to build an object file
+data_point.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/data_point.cpp.o
+.PHONY : data_point.cpp.o
+
+data_point.i: data_point.cpp.i
+.PHONY : data_point.i
+
+# target to preprocess a source file
+data_point.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/data_point.cpp.i
+.PHONY : data_point.cpp.i
+
+data_point.s: data_point.cpp.s
+.PHONY : data_point.s
+
+# target to generate assembly for a file
+data_point.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Mycascade.dir/build.make CMakeFiles/Mycascade.dir/data_point.cpp.s
+.PHONY : data_point.cpp.s
+
 debug.o: debug.cpp.o
 .PHONY : debug.o
 
@@ -564,6 +588,9 @@ help:
 	@echo "... classical_session.o"
 	@echo "... classical_session.i"
 	@echo "... classical_session.s"
+	@echo "... data_point.o"
+	@echo "... data_point.i"
+	@echo "... data_point.s"
 	@echo "... debug.o"
 	@echo "... debug.i"
 	@echo "... debug.s"

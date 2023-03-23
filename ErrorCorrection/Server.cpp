@@ -48,6 +48,7 @@ namespace Cascade {
         return correct_parity;
     }
 
+    // this is the main loop that the server executes, as it is basically listening to the classical channel to responde
     void Server::serverLoop() {
         ConnHandler handler;
         AMQP::TcpConnection connection(handler,
@@ -60,64 +61,98 @@ namespace Cascade {
         });
         channel.setQos(1);
         channel.declareQueue("serverQueue");
-        channel.consume("serverQueue", "alfredo", AMQP::noack + AMQP::exclusive)
+
+        channel.consume("serverQueue", tag + "_Server", AMQP::noack + AMQP::exclusive)
                 .onReceived
                         (
-                                [&, this](const AMQP::Message &m, uint64_t tag, bool) {
-                                    int startBit = -1;
-                                    int endBit = -1;
-                                    int nIteration = -1;
-                                    AMQP::Table headers = m.headers();
-                                    std::string messageType = headers.get("messageType");
-
+                                [&, this](const AMQP::Message &message, uint64_t tag, bool) {
+                                    AMQP::Table receivedHeaders = message.headers();
+                                    std::string messageType = receivedHeaders.get("messageType");
                                     if (strcmp(messageType.c_str(), "startIteration") == 0) {
-                                        std::string seed = headers.get("seed");
-                                        nIteration = headers.get("nIteration");
-                                        start_iteration_with_shuffle_seed(nIteration, seed);
+                                        start_iteration_with_shuffle_seed(receivedHeaders.get("nIteration"),
+                                                                          receivedHeaders.get("seed"));
                                     } else if (strcmp(messageType.c_str(), "cascade_rpc") == 0) {
-                                        startBit = headers.get("startBit");
-                                        endBit = headers.get("endBit");
-                                        nIteration = headers.get("nIteration");
-                                        int response = return_correct_parities(nIteration, startBit, endBit);
-                                        AMQP::Envelope env("", 0);
-                                        AMQP::Table headers;
-                                        headers.set("parity", response);
-                                        env.setHeaders(headers);
-                                        env.setCorrelationID(m.correlationID());
-                                        channel.publish("", m.replyTo(), env);
+                                        rpcRound(&channel, message, receivedHeaders);
                                     } else if (strcmp(messageType.c_str(), "initialization") == 0) {
-                                        Key noisyKey(correct_key);
-                                        noisyKey.apply_noise(noise);
-                                        AMQP::Envelope env("", 0);
-                                        AMQP::Table headers;
-                                        headers.set("messageType", "initializationResponse");
-                                        headers.set("key", noisyKey.to_string());
-                                        env.setHeaders(headers);
-                                        env.setCorrelationID(m.correlationID());
-                                        channel.publish("", m.replyTo(), env);
+                                        initialization(&channel, message);
                                     } else if (strcmp(messageType.c_str(), "closing") == 0) {
-                                        AMQP::Envelope env("", 0);
-                                        AMQP::Table headers;
-                                        headers.set("messageType", "closingConfirm");
-                                        env.setHeaders(headers);
-                                        env.setCorrelationID(m.correlationID());
-                                        channel.publish("", m.replyTo(), env);
-                                        channel.cancel("alfredo");
-                                        channel.removeQueue("serverQueue");
-                                        handler.Stop();
+                                        closingConnection(&handler, &channel, message);
 
                                     } else {
-                                        std::cout << "unrecognized message type: " << tag << std::endl;
+                                        std::cout << "unrecognized message type, with tag: " << tag << std::endl;
                                     }
-
                                 }
-
                         ).onCancelled([&](const std::string &consumertag) {
                     handler.Stop();
 
                 });
         handler.Start();
         connection.close();
+    }
+
+    void Server::rpcRound(AMQP::TcpChannel *channel, const AMQP::Message &message,
+                          const AMQP::Table &receivedHeaders) {
+        int nBlocks = receivedHeaders.get("numberOfBlocks");
+        std::string parities = "";
+        std::vector<std::string> lines;
+        std::vector<std::string> fields;
+        boost::split(lines, message.body(), boost::is_any_of("\n"));
+        for (int i = 0; i < nBlocks; i++) {
+            boost::split(fields, lines[i], boost::is_any_of(","));
+            parities += std::to_string(
+                    return_correct_parities(std::stoi(fields[0]), std::stoi(fields[1]),
+                                            std::stoi(fields[2]))) + ",";
+        }
+        AMQP::Envelope env(parities.c_str(), parities.size());
+        AMQP::Table headers;
+        headers.set("numberOfBlocks", nBlocks);
+        env.setHeaders(headers);
+        env.setCorrelationID(message.correlationID());
+        channel->publish("", message.replyTo(), env);
+    }
+
+    const std::string &Server::getTag() const {
+        return tag;
+    }
+
+    void Server::setTag(const std::string &tag) {
+        Server::tag = tag;
+    }
+
+    void
+    Server::closingConnection(ConnHandler *handler, AMQP::TcpChannel *channel, const AMQP::Message &message) const {
+        std::string correctWords = "";
+
+        for (auto &it: correct_key.getWords()) {
+            correctWords += std::to_string(it) + '\n';
+        }
+        AMQP::Envelope env(correctWords.c_str(), correctWords.size());
+        AMQP::Table headers;
+        headers.set("nrBits", correct_key.get_nr_bits());
+        headers.set("nrWords", correct_key.getNrWords());
+        headers.set("messageType", "closingConfirm");
+        env.setHeaders(headers);
+        env.setCorrelationID(message.correlationID());
+        channel->publish("", message.replyTo(), env);
+        channel->cancel(tag+"_Server");
+        handler->Stop();
+    }
+
+    void Server::initialization(AMQP::TcpChannel *channel, const AMQP::Message &message) const {
+        std::string noisyWords = "";
+        Key noisyKey(correct_key);
+        noisyKey.apply_noise(noise);
+        for (auto &it: noisyKey.getWords()) {
+            noisyWords += std::to_string(it) + '\n';
+        }
+        AMQP::Envelope envelope(noisyWords.c_str(), noisyWords.size());
+        AMQP::Table headers;
+        headers.set("messageType", "initializationResponse");
+        headers.set("nrBits", noisyKey.get_nr_bits());
+        headers.set("nrWords", noisyKey.getNrWords());
+        envelope.setHeaders(headers);
+        envelope.setCorrelationID(message.correlationID());
+        channel->publish("", message.replyTo(), envelope);
     }
 
 

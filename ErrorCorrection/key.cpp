@@ -72,10 +72,9 @@ Key::Key(int nr_bits_param)
     // Construct a key with the bits set to random values.
     nr_bits = nr_bits_param;
     nr_words = (nr_bits_param - 1) / 64 + 1;
-    words = new uint64_t[nr_words];
+    words.reserve(nr_words);
     for (int word_nr = 0; word_nr < nr_words; word_nr++) {
-        words[word_nr] = uint64_t(random_uint32()) << 32 | random_uint32();
-
+        words.push_back( uint64_t(random_uint32()) << 32 | random_uint32());
     }
     words[nr_words - 1] &= end_word_mask(nr_bits - 1);
 
@@ -86,13 +85,13 @@ Key::Key(const Key& key)
 {
     nr_bits = key.nr_bits;
     nr_words = key.nr_words;
-    words = new uint64_t[nr_words];
-    std::memcpy(words, key.words, nr_words * sizeof(words[0]));
+    words = key.words;
 }
 
 Key::~Key()
 {
-    delete[] words;
+     words.clear();
+     words.shrink_to_fit();
 }
 
 std::string Key::to_string() const
@@ -207,7 +206,8 @@ Key Key::parseKey(std::string key)
 {
     int nrBits = key.size();
     int nr_words = (nrBits - 1) / 64 + 1;
-     uint64_t *words = new uint64_t[nr_words];
+     std::vector<uint64_t> words;
+     words.reserve(nr_words);
      int len;
      int pos=0;
     for (int word_nr = 0; word_nr *64< nrBits; word_nr += 1) {
@@ -221,7 +221,7 @@ Key Key::parseKey(std::string key)
         }
         std::string word = key.substr(pos, len);
         uint64_t value = stoull(word, nullptr, 2);
-        words[ (nr_words-1)-word_nr] = value;
+        words.insert(words.begin(), value);
     }
     words[nr_words-1] &= end_word_mask(nrBits - 1);
 
@@ -229,14 +229,11 @@ Key Key::parseKey(std::string key)
     return newKey;
 }
 
-Key::Key(int nrBits, int nrWords, uint64_t *words) : nr_bits(nrBits), nr_words(nrWords), words(words) {
-
-
+Key::Key(int nrBits, int nrWords, std::vector<uint64_t> words) : nr_bits(nrBits), nr_words(nrWords), words(words) {
 
 }
 
 std::string Key::arrayToString(uint64_t* wordss, int nr_bitss){
-
     std::string string = "";
     int word_nr;
     int bit_nr = 0;
@@ -249,10 +246,21 @@ std::string Key::arrayToString(uint64_t* wordss, int nr_bitss){
         bit_nr += 1;
     }
     return string;
-
-
-
-
-
-
 }
+
+int Key::getNrWords() const {
+    return nr_words;
+}
+
+std::vector<uint64_t>Key::getWords() const {
+    return words;
+}
+
+void Key::setNrWords(int nrWords) {
+    nr_words = nrWords;
+}
+
+void Key::setWords(std::vector<uint64_t >words) {
+    Key::words = words;
+}
+

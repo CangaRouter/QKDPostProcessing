@@ -5,13 +5,24 @@
 #include <cassert>
 #include <cmath>
 #include <ctime>
+#include <boost/algorithm/string.hpp>
 
 using namespace Cascade;
 
-Client::Client(const Algorithm &algorithm, ClassicalSession &classicalSession, int nr_bits, double noise) : algorithm(algorithm),
-                                                                                 classical_session(classicalSession),
-                                                                                 reconciled_key(classical_session.initialization()),nr_key_bits(nr_bits),estimated_bit_error_rate(noise) {
- std::cout<<"Noisy Key received: "<<reconciled_key.to_string()<<std::endl;
+Client::Client(const Algorithm &algorithm, ClassicalSession &classicalSession, int nr_bits, double noise) : algorithm(
+        algorithm),
+                                                                                                            classical_session(
+                                                                                                                    classicalSession),
+                                                                                                            reconciled_key(
+                                                                                                                    classical_session.initialization()),
+                                                                                                            nr_key_bits(
+                                                                                                                    nr_bits),
+                                                                                                            estimated_bit_error_rate(
+                                                                                                                    noise),noisyKey(reconciled_key){
+    if (nr_bits <= 10000)
+        std::cout << "Noisy Key received: " << reconciled_key.to_string() << std::endl;
+    else std::cout << "Noisy Key received" << std::endl;
+    stats.keySize = nr_bits;
 }
 
 
@@ -30,7 +41,6 @@ double Client::get_estimated_bit_error_rate() const {
 Key &Client::get_reconciled_key() {
     return reconciled_key;
 }
-
 
 
 int Client::get_nr_key_bits() const {
@@ -87,7 +97,10 @@ void Client::reconcile() {
     long reconciliation_bits = stats.start_iteration_bits + stats.ask_parity_bits +
                                stats.reply_parity_bits;
     stats.realistic_efficiency = compute_efficiency(reconciliation_bits);
-    classical_session.closeConnection();
+    Key correctKey = classical_session.closeConnection();
+    stats.setActualBitErrors(correctKey.nr_bits_different(noisyKey));
+    stats.setRemainingBitErrors(correctKey.nr_bits_different(reconciled_key));
+    stats.setCorrectKey(correctKey);
 }
 
 void Client::all_normal_cascade_iterations() {
@@ -123,7 +136,7 @@ void Client::start_iteration_common(int iteration_nr, bool biconf) {
     iterations.push_back(iteration);
     stats.start_iteration_messages += 1;
     classical_session.start_iteration_with_shuffle_seed(iteration_nr,
-                                                            iteration->get_shuffle()->get_seed());
+                                                        iteration->get_shuffle()->get_seed());
     stats.start_iteration_bits += 32 + 64;
 
     iteration->schedule_initial_work();
@@ -190,12 +203,27 @@ void Client::ask_correct_parities(PendingItemQueue &ask_correct_parity_blocks) {
     // Once we implement the real classical session, we will need to keep track of the blocks
     // for which we asked Alice the correct parity, but for which we have not yet received the
     // answer from Alice. For now, assume we get the answer immediately.
+    int *iteration_nr = new int[ask_correct_parity_blocks.size()];
+    int *start_bit = new int[ask_correct_parity_blocks.size()];
+    int *end_bit = new int[ask_correct_parity_blocks.size()];
+    int *correct_parity;
+    int i = 0;
     for (auto it = ask_correct_parity_blocks.begin(); it != ask_correct_parity_blocks.end(); ++it) {
         PendingItem pending_item(*it);
         BlockPtr block = pending_item.block;
-        int iteration_nr = block->get_iteration().get_iteration_nr();
-        int correct_parity =classical_session.channel_correct_parities(iteration_nr, block->get_start_bit_nr(), block->get_end_bit_nr() );
-        block->set_correct_parity(correct_parity);
+        iteration_nr[i] = block->get_iteration().get_iteration_nr();
+        start_bit[i] = block->get_start_bit_nr();
+        end_bit[i] = block->get_end_bit_nr();
+        ++i;
+    }
+    i = 0;
+    correct_parity = classical_session.channel_correct_parities(iteration_nr, start_bit, end_bit,
+                                                                ask_correct_parity_blocks.size());
+    for (auto it = ask_correct_parity_blocks.begin(); it != ask_correct_parity_blocks.end(); ++it) {
+        PendingItem pending_item(*it);
+        BlockPtr block = pending_item.block;
+        block->set_correct_parity(*correct_parity);
+        correct_parity++;
     }
 }
 
@@ -204,12 +232,13 @@ void Client::service_pending_ask_correct_parity() {
     stats.ask_parity_messages += 1;
     stats.ask_parity_blocks += pending_ask_correct_parity_blocks.size();
     stats.reply_parity_bits += pending_ask_correct_parity_blocks.size();
-    ask_correct_parities(pending_ask_correct_parity_blocks);
-
+    if (!pending_ask_correct_parity_blocks.empty())
+        ask_correct_parities(pending_ask_correct_parity_blocks);
     // Move all blocks over to the try-correct list.
     while (!pending_ask_correct_parity_blocks.empty()) {
         PendingItem pending_item = pending_ask_correct_parity_blocks.front();
         pending_ask_correct_parity_blocks.pop_front();
         schedule_try_correct(pending_item.block, pending_item.correct_right_sibling);
     }
+
 }

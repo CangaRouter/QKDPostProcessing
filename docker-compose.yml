@@ -16,7 +16,7 @@ services:
     depends_on:
       rabbitmq:
         condition: service_started
-    command: [ "python3", "./wapper.py", "server" ]
+    command: [ "python3", "wrapper.py", "server" ,"${NBITS}","${ER_VARIANT}","${QBER}","${PORT}","${USR}","${PW}", "${COMPRESSION}"]
 
   client:
     build:
@@ -25,4 +25,4 @@ services:
     depends_on:
       rabbitmq:
         condition: service_started
-    command: [ "python3", "./wapper.py", "client" ]
+    command: [ "python3", "wrapper.py", "client" ,"${NBITS}","${ER_VARIANT}","${QBER}","${PORT}","${USR}","${PW}","${COMPRESSION}"]

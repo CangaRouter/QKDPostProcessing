@@ -18,12 +18,6 @@ namespace Cascade {
     class Client {
     public:
 
-
-        Client(const Algorithm &algorithm,
-               ClassicalSession &classical_session,
-               const Key &noisy_key,
-               double estimated_bit_error_rate);
-
         Client(const Algorithm &algorithm, ClassicalSession &classicalSession, int nr_bits, double noise);
 
         ~Client();
@@ -74,6 +68,7 @@ namespace Cascade {
         PendingItemQueue pending_try_correct_blocks;
         Stats stats;
         std::map<int, ShuffledKeyPtr> shuffled_keys;
+        Key noisyKey;
 
 
         void ask_correct_parities(PendingItemQueue &ask_correct_parity_blocks);
