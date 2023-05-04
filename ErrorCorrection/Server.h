@@ -26,7 +26,7 @@ namespace Cascade {
         Server(Key &correctKey, bool cacheShuffles);
 
         Server(Key &correctKey, bool cacheShuffles, const std::string &host, int port, const std::string &user,
-               const std::string &pw,const double noise);
+               const std::string &pw,const double noise,const std::string seq);
 
         int return_correct_parities(int iterationNr, int startBit, int endBit);
 
@@ -62,11 +62,12 @@ namespace Cascade {
         std::string pw;
         double noise;
         std::string tag = std::to_string(rand());
+        std::string id;
 
 
         void initialization(AMQP::TcpChannel *channel, const AMQP::Message &message) const;
 
-        void closingConnection(ConnHandler *handler, AMQP::TcpChannel *channel, const AMQP::Message &message) const;
+        void closingConnection(ConnHandler *handler, AMQP::TcpChannel *channel, const AMQP::Message &message, AMQP::TcpConnection *connection) const;
 
         void rpcRound(AMQP::TcpChannel *channel, const AMQP::Message &message, const AMQP::Table &receivedHeaders);
     };

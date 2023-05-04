@@ -20,7 +20,7 @@ namespace Cascade {
             {
             public:
 
-        RabbitmqClassicalSession(std::string host, int port, std::string user, std::string pw);
+        RabbitmqClassicalSession(std::string host, int port, std::string user, std::string pw,std::string seq);
 
         ~RabbitmqClassicalSession() override;
 
@@ -42,7 +42,7 @@ namespace Cascade {
         ConnHandler handler;
         AMQP::TcpChannel* channel;
         std::string tag;
-
+        std::string id;
     };
 
 } /* namespace Cascade */

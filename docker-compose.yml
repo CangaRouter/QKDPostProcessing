@@ -16,7 +16,7 @@ services:
     depends_on:
       rabbitmq:
         condition: service_started
-    command: [ "python3", "wrapper.py", "server" ,"${NBITS}","${ER_VARIANT}","${QBER}","${PORT}","${USR}","${PW}", "${COMPRESSION}"]
+    command: [ "python3","-u", "wrapper.py", "server" ,"${NBITS}","${ER_VARIANT}","${QBER}","${PORT}","${USR}","${PW}", "${COMPRESSION}","${NBLOCKS}","${RUNS}", "${SEQ}", "${HOST}","${SPLIT_KEY}"]
 
   client:
     build:
@@ -25,4 +25,4 @@ services:
     depends_on:
       rabbitmq:
         condition: service_started
-    command: [ "python3", "wrapper.py", "client" ,"${NBITS}","${ER_VARIANT}","${QBER}","${PORT}","${USR}","${PW}","${COMPRESSION}"]
+    command: [ "python3","-u", "wrapper.py", "client" ,"${NBITS}","${ER_VARIANT}","${QBER}","${PORT}","${USR}","${PW}","${COMPRESSION}","${NBLOCKS}","${RUNS}", "${SEQ}", "${HOST}","${SPLIT_KEY}"]

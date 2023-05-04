@@ -19,9 +19,7 @@ Client::Client(const Algorithm &algorithm, ClassicalSession &classicalSession, i
                                                                                                                     nr_bits),
                                                                                                             estimated_bit_error_rate(
                                                                                                                     noise),noisyKey(reconciled_key){
-    if (nr_bits <= 10000)
-        std::cout << "Noisy Key received: " << reconciled_key.to_string() << std::endl;
-    else std::cout << "Noisy Key received" << std::endl;
+
     stats.keySize = nr_bits;
 }
 

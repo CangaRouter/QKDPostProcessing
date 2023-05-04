@@ -7,12 +7,15 @@
 #include <utility>
 #include <amqpcpp.h>
 #include <sstream>
+#include <thread>
+#include <chrono>
 
 
 using namespace Cascade;
 
-RabbitmqClassicalSession::RabbitmqClassicalSession(std::string host, int port, std::string user, std::string pw)
-        : host(host), port(port), user(user), pw(pw) {
+RabbitmqClassicalSession::RabbitmqClassicalSession(std::string host, int port, std::string user, std::string pw,
+                                                   std::string seq)
+        : host(host), port(port), user(user), pw(pw), id(seq) {
     connection = new AMQP::TcpConnection(handler,
                                          AMQP::Address(host, port, AMQP::Login(user, pw), "/"));
     channel = new AMQP::TcpChannel(connection);
@@ -20,9 +23,9 @@ RabbitmqClassicalSession::RabbitmqClassicalSession(std::string host, int port, s
         std::cout << "Channel error: " << message << std::endl;
         handler.Stop();
     });
-    channel->setQos(1);
-    channel->declareQueue("clientQueue");
-    channel->declareQueue("initQueue");
+    channel->setQos(10);
+    channel->declareQueue("clientQueue" + id);
+    channel->declareQueue("initQueue" + id);
     tag = std::to_string(rand());
 }
 
@@ -41,27 +44,31 @@ Key RabbitmqClassicalSession::closeConnection() {
     headers.set("messageType", "closing");
     AMQP::Envelope env("", 0);
     env.setCorrelationID(correlationId);
-    env.setReplyTo("clientQueue");
+    env.setReplyTo("clientQueue" + id);
     env.setHeaders(headers);
-    channel->publish("", "serverQueue", env);
-    channel->consume("clientQueue", tag+"_close", AMQP::noack)
-            .onReceived([&](const AMQP::Message &m, uint64_t, bool) {
+    channel->publish("", "serverQueue" + id, env);
+    channel->consume("clientQueue" + id, tag + "_ClientClose", AMQP::noack)
+            .onReceived([&](const AMQP::Message &m, uint64_t tag, bool) {
                 if (m.correlationID() != correlationId)
                     return; // just skip it
-                AMQP::Table headers = m.headers();
+                const AMQP::Table &headers = m.headers();
                 nrBits = headers.get("nrBits");
                 nrWords = headers.get("nrWords");
-                std::string bodyStr(m.body());
                 boost::split(responseStr, m.body(), boost::is_any_of("\n"));
-                responseStr.pop_back();
-                for (auto &it: responseStr) {
-                    words.push_back(stoull(it, nullptr, 10));
+                for (int k = 0; k < nrWords; k++) {
+                    try {
+                        words.push_back(stoull(responseStr[k], nullptr, 10));
+                    } catch (...) {
+                        std::cerr << "RabbitmqClassicalSession_Close" << std::endl;
+                        std::cerr << m.body() << std::endl;
+                        exit(-1);
+                    }
                 }
-                channel->removeQueue("clientQueue");
-                handler.Stop();
+                channel->cancel(this->tag + "_ClientClose");
+                channel->close();
+                connection->close();
             });
     handler.Start();
-    connection->close();
     Key correctKey = Key(nrBits, nrWords, words);
     return correctKey;
 }
@@ -76,23 +83,27 @@ Key RabbitmqClassicalSession::initialization() {
     headers.set("messageType", "initialization");
     AMQP::Envelope env("", 0);
     env.setCorrelationID(correlationId);
-    env.setReplyTo("initQueue");
+    env.setReplyTo("initQueue" + id);
     env.setHeaders(headers);
-    channel->publish("", "serverQueue", env);
-    channel->consume("initQueue", tag+"_init", AMQP::noack)
-            .onReceived([&](const AMQP::Message &m, uint64_t, bool) {
+    channel->publish("", "serverQueue" + id, env);
+    channel->consume("initQueue" + id, tag + "_init", AMQP::noack)
+            .onReceived([&](const AMQP::Message &m, uint64_t tag, bool) {
                 if (m.correlationID() != correlationId)
                     return; // just skip it
-                AMQP::Table headers = m.headers();
+                const AMQP::Table &headers = m.headers();
                 nrBits = headers.get("nrBits");
                 nrWords = headers.get("nrWords");
-                std::string bodyStr(m.body());
                 boost::split(responseStr, m.body(), boost::is_any_of("\n"));
-                responseStr.pop_back();
-                for (auto &it: responseStr) {
-                    words.push_back(stoull(it, nullptr, 10));
+                for (int k = 0; k < nrWords; k++) {
+                    try {
+                        words.push_back(stoull(responseStr[k], nullptr, 10));
+                    } catch (...) {
+                        std::cerr << "RabbitmqClassicalSession_Init" << std::endl;
+                        std::cerr << m.body() << std::endl;
+                        exit(-1);
+                    }
                 }
-                channel->removeQueue("initQueue");
+                channel->cancel(this->tag + "_init");
                 handler.Stop();
             });
     handler.Start();
@@ -111,7 +122,7 @@ void RabbitmqClassicalSession::start_iteration_with_shuffle_seed(int iteration_n
 
     AMQP::Envelope env(body.c_str(), body.size());
     env.setHeaders(headers);
-    channel->publish("", "serverQueue", env);
+    channel->publish("", "serverQueue" + id, env);
 
 }
 
@@ -129,19 +140,18 @@ int *RabbitmqClassicalSession::channel_correct_parities(int *iterationNr, int *s
     }
     AMQP::Envelope env(body.c_str(), body.size());
     env.setCorrelationID(correlationId);
-    env.setReplyTo("clientQueue");
+    env.setReplyTo("clientQueue" + id);
     env.setHeaders(headers);
-    channel->publish("", "serverQueue", env);
-
-    channel->consume("clientQueue", tag+"_client", AMQP::noack)
-            .onReceived([&](const AMQP::Message &m, uint64_t, bool) {
+    channel->publish("", "serverQueue" + id, env);
+    channel->consume("clientQueue" + id, tag + "_client", AMQP::noack)
+            .onReceived([&](const AMQP::Message &m, uint64_t tag, bool) {
                 if (m.correlationID() != correlationId)
                     return; // just skip it
                 boost::split(responseStr, m.body(), boost::is_any_of(","));
                 for (int i = 0; i < nBlocks; ++i) {
                     response[i] = stoi(responseStr[i]);
                 }
-                channel->cancel(tag+"_client");
+                channel->cancel(this->tag + "_client");
                 handler.Stop();
             });
     handler.Start();

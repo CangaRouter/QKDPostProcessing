@@ -16,14 +16,15 @@ namespace Cascade {
 
 
     Server::Server(Key &correctKey, bool cacheShuffles, const std::string &host, int port, const std::string &user,
-                   const std::string &pw, double noise) : correct_key(correctKey), cache_shuffles(cacheShuffles),
-                                                          host(host),
-                                                          port(port), user(user), pw(pw), noise(noise) {
+                   const std::string &pw, double noise, const std::string seq) : correct_key(correctKey),
+                                                                                 cache_shuffles(cacheShuffles),
+                                                                                 host(host),
+                                                                                 port(port), user(user), pw(pw),
+                                                                                 noise(noise), id(seq) {
 
         serverLoop();
 
     }
-
 
     Server::~Server() = default;
 
@@ -48,7 +49,7 @@ namespace Cascade {
         return correct_parity;
     }
 
-    // this is the main loop that the server executes, as it is basically listening to the classical channel to responde
+    // this is the main loop that the server executes, as it is basically listening to the classical channel to response
     void Server::serverLoop() {
         ConnHandler handler;
         AMQP::TcpConnection connection(handler,
@@ -60,9 +61,15 @@ namespace Cascade {
             handler.Stop();
         });
         channel.setQos(1);
-        channel.declareQueue("serverQueue");
+        channel.declareQueue("serverQueue" + id);
+        channel.onError(
+                [&, this](const char *message) {
+                    std::cout << "Channel error: " << message << std::endl;
+                    handler.Stop();
+                }
+        );
 
-        channel.consume("serverQueue", tag + "_Server", AMQP::noack + AMQP::exclusive)
+        channel.consume("serverQueue" + id, tag + "_Server",AMQP::noack+ AMQP::exclusive)
                 .onReceived
                         (
                                 [&, this](const AMQP::Message &message, uint64_t tag, bool) {
@@ -75,19 +82,16 @@ namespace Cascade {
                                         rpcRound(&channel, message, receivedHeaders);
                                     } else if (strcmp(messageType.c_str(), "initialization") == 0) {
                                         initialization(&channel, message);
-                                    } else if (strcmp(messageType.c_str(), "closing") == 0) {
-                                        closingConnection(&handler, &channel, message);
-
+                                    } else if (strcmp(messageType.c_str(), "testConnection") == 0);
+                                    else if (strcmp(messageType.c_str(), "closing") == 0) {
+                                        closingConnection(&handler, &channel, message, &connection);
                                     } else {
                                         std::cout << "unrecognized message type, with tag: " << tag << std::endl;
                                     }
                                 }
-                        ).onCancelled([&](const std::string &consumertag) {
-                    handler.Stop();
-
-                });
+                        );
         handler.Start();
-        connection.close();
+
     }
 
     void Server::rpcRound(AMQP::TcpChannel *channel, const AMQP::Message &message,
@@ -106,6 +110,7 @@ namespace Cascade {
         AMQP::Envelope env(parities.c_str(), parities.size());
         AMQP::Table headers;
         headers.set("numberOfBlocks", nBlocks);
+        headers.set("messageType", "Reply_rpc");
         env.setHeaders(headers);
         env.setCorrelationID(message.correlationID());
         channel->publish("", message.replyTo(), env);
@@ -120,13 +125,13 @@ namespace Cascade {
     }
 
     void
-    Server::closingConnection(ConnHandler *handler, AMQP::TcpChannel *channel, const AMQP::Message &message) const {
-        std::string correctWords = "";
-
+    Server::closingConnection(ConnHandler *handler, AMQP::TcpChannel *channel, const AMQP::Message &message,
+                              AMQP::TcpConnection *connection) const {
+        std::string correctWords;
         for (auto &it: correct_key.getWords()) {
             correctWords += std::to_string(it) + '\n';
         }
-        AMQP::Envelope env(correctWords.c_str(), correctWords.size());
+        AMQP::Envelope env(correctWords.c_str());
         AMQP::Table headers;
         headers.set("nrBits", correct_key.get_nr_bits());
         headers.set("nrWords", correct_key.getNrWords());
@@ -134,18 +139,19 @@ namespace Cascade {
         env.setHeaders(headers);
         env.setCorrelationID(message.correlationID());
         channel->publish("", message.replyTo(), env);
-        channel->cancel(tag+"_Server");
-        handler->Stop();
+        channel->cancel(this->tag + "_Server");
+        channel->close();
+        connection->close();
     }
 
     void Server::initialization(AMQP::TcpChannel *channel, const AMQP::Message &message) const {
-        std::string noisyWords = "";
+        std::string noisyWords;
         Key noisyKey(correct_key);
         noisyKey.apply_noise(noise);
         for (auto &it: noisyKey.getWords()) {
             noisyWords += std::to_string(it) + '\n';
         }
-        AMQP::Envelope envelope(noisyWords.c_str(), noisyWords.size());
+        AMQP::Envelope envelope(noisyWords.c_str());
         AMQP::Table headers;
         headers.set("messageType", "initializationResponse");
         headers.set("nrBits", noisyKey.get_nr_bits());

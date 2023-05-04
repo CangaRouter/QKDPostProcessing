@@ -17,7 +17,7 @@ namespace Cascade {
                 virtual int* channel_correct_parities(int *, int* , int*,int ) =0 ;
                 virtual Key closeConnection()=0;
                 virtual Key initialization()=0;
-    };
+            };
 
 } /* namespace Cascade */
 

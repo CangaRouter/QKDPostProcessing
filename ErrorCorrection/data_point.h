@@ -97,28 +97,30 @@ public:
 
     void setCorrectKey(const std::string &correctKey);
 
+    void computeAverages();
+
 private:
     std::string algorithm_name;
     int key_size;
     double requested_bit_error_rate;
     long reconciliations;
-    int actual_bit_errors;
-    double actual_bit_error_rate;
-    double elapsed_process_time;
-    double elapsed_real_time;
-    int normal_iterations;
-    int biconf_iterations;
-    int ask_parity_messages;
-    int ask_parity_blocks;
-    int ask_parity_bits;
-    int reply_parity_bits;
-    double unrealistic_efficiency;
-    double realistic_efficiency;
-    int infer_parity_blocks;
-    int remaining_bit_errors;
-    double remaining_bit_error_rate;
-    double remaining_frame_error_rate;
-    std::string correctKey;
+    int actual_bit_errors=0;
+    double actual_bit_error_rate=0;
+    double elapsed_process_time=0;
+    double elapsed_real_time=0;
+    int normal_iterations=0;
+    int biconf_iterations=0;
+    int ask_parity_messages=0;
+    int ask_parity_blocks=0;
+    int ask_parity_bits=0;
+    int reply_parity_bits=0;
+    double unrealistic_efficiency=0;
+    double realistic_efficiency=0;
+    int infer_parity_blocks=0;
+    int remaining_bit_errors=0;
+    double remaining_bit_error_rate=0;
+    double remaining_frame_error_rate=0;
+    std::string correctKey="";
 };
 
 #endif /* ifndef DATA_POINT_H */

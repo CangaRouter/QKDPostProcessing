@@ -1754,7 +1754,13 @@ CMakeFiles/Mycascade.dir/RabbitmqClassicalSession.cpp.o: ../RabbitmqClassicalSes
   /usr/include/boost/algorithm/string/erase.hpp \
   ../stats.h \
   /usr/include/c++/11/sstream \
-  /usr/include/c++/11/bits/sstream.tcc
+  /usr/include/c++/11/bits/sstream.tcc \
+  /usr/include/c++/11/thread \
+  /usr/include/c++/11/bits/std_thread.h \
+  /usr/include/c++/11/bits/this_thread_sleep.h \
+  /usr/include/c++/11/chrono \
+  /usr/include/c++/11/ratio \
+  /usr/include/c++/11/bits/parse_numbers.h
 
 CMakeFiles/Mycascade.dir/Server.cpp.o: ../Server.cpp \
   /usr/include/stdc-predef.h \
@@ -6338,6 +6344,48 @@ CMakeFiles/Mycascade.dir/main.cpp.o: ../main.cpp \
   /usr/include/boost/algorithm/string/detail/formatter.hpp \
   /usr/include/boost/algorithm/string/erase.hpp \
   ../RabbitmqClassicalSession.h \
+  /usr/include/boost/exception/diagnostic_information.hpp \
+  /usr/include/boost/exception/get_error_info.hpp \
+  /usr/include/boost/exception/detail/error_info_impl.hpp \
+  /usr/include/boost/type_traits/is_nothrow_move_constructible.hpp \
+  /usr/include/boost/exception/detail/type_info.hpp \
+  /usr/include/boost/core/typeinfo.hpp \
+  /usr/include/boost/exception/detail/shared_ptr.hpp \
+  /usr/include/boost/shared_ptr.hpp \
+  /usr/include/boost/smart_ptr/shared_ptr.hpp \
+  /usr/include/boost/smart_ptr/detail/shared_count.hpp \
+  /usr/include/boost/smart_ptr/bad_weak_ptr.hpp \
+  /usr/include/boost/smart_ptr/detail/sp_counted_base.hpp \
+  /usr/include/boost/smart_ptr/detail/sp_has_gcc_intrinsics.hpp \
+  /usr/include/boost/smart_ptr/detail/sp_has_sync_intrinsics.hpp \
+  /usr/include/boost/smart_ptr/detail/sp_counted_base_gcc_atomic.hpp \
+  /usr/include/boost/smart_ptr/detail/sp_typeinfo_.hpp \
+  /usr/include/boost/smart_ptr/detail/sp_counted_impl.hpp \
+  /usr/include/boost/smart_ptr/detail/sp_noexcept.hpp \
+  /usr/include/boost/checked_delete.hpp \
+  /usr/include/boost/smart_ptr/detail/sp_disable_deprecated.hpp \
+  /usr/include/boost/smart_ptr/detail/sp_convertible.hpp \
+  /usr/include/boost/smart_ptr/detail/sp_nullptr_t.hpp \
+  /usr/include/boost/smart_ptr/detail/spinlock_pool.hpp \
+  /usr/include/boost/smart_ptr/detail/spinlock.hpp \
+  /usr/include/boost/smart_ptr/detail/spinlock_gcc_atomic.hpp \
+  /usr/include/boost/smart_ptr/detail/yield_k.hpp \
+  /usr/include/boost/smart_ptr/detail/sp_thread_pause.hpp \
+  /usr/include/boost/smart_ptr/detail/sp_thread_sleep.hpp \
+  /usr/include/boost/config/pragma_message.hpp \
+  /usr/include/boost/smart_ptr/detail/operator_bool.hpp \
+  /usr/include/boost/smart_ptr/detail/local_sp_deleter.hpp \
+  /usr/include/boost/smart_ptr/detail/local_counted_base.hpp \
+  /usr/include/boost/exception/info.hpp \
+  /usr/include/boost/exception/to_string_stub.hpp \
+  /usr/include/boost/exception/to_string.hpp \
+  /usr/include/boost/exception/detail/is_output_streamable.hpp \
+  /usr/include/c++/11/sstream \
+  /usr/include/c++/11/bits/sstream.tcc \
+  /usr/include/boost/exception/detail/object_hex_dump.hpp \
+  /usr/include/c++/11/iomanip \
+  /usr/include/c++/11/bits/quoted_string.h \
+  /usr/include/boost/exception/current_exception_cast.hpp \
   /usr/include/c++/11/thread \
   /usr/include/c++/11/bits/std_thread.h \
   /usr/include/c++/11/bits/this_thread_sleep.h \
@@ -8465,9 +8513,47 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 
 /usr/include/c++/11/fstream:
 
+/usr/include/boost/exception/current_exception_cast.hpp:
+
+/usr/include/boost/exception/to_string.hpp:
+
+/usr/include/boost/exception/to_string_stub.hpp:
+
+/usr/include/boost/exception/info.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_thread_sleep.hpp:
+
+/usr/include/boost/smart_ptr/detail/yield_k.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_disable_deprecated.hpp:
+
+/usr/include/boost/checked_delete.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_noexcept.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_counted_impl.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_typeinfo_.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_counted_base_gcc_atomic.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_has_sync_intrinsics.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_counted_base.hpp:
+
+/usr/include/boost/smart_ptr/bad_weak_ptr.hpp:
+
+/usr/include/boost/smart_ptr/detail/shared_count.hpp:
+
+/usr/include/boost/exception/detail/error_info_impl.hpp:
+
+/usr/include/boost/exception/diagnostic_information.hpp:
+
 /usr/include/c++/11/unordered_set:
 
 /usr/include/c++/11/bits/quoted_string.h:
+
+/usr/include/boost/shared_ptr.hpp:
 
 /usr/include/c++/11/iomanip:
 
@@ -8514,6 +8600,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 /usr/include/boost/preprocessor/repetition/enum.hpp:
 
 /usr/include/boost/preprocessor/enum.hpp:
+
+/usr/include/boost/core/typeinfo.hpp:
 
 /usr/include/boost/bind/mem_fn_template.hpp:
 
@@ -8689,6 +8777,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 
 /usr/include/boost/concept/detail/has_constraints.hpp:
 
+/usr/include/boost/smart_ptr/detail/spinlock_pool.hpp:
+
 /usr/include/boost/concept/detail/backward_compatibility.hpp:
 
 ../random.cpp:
@@ -8853,6 +8943,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 
 /usr/include/boost/range/detail/implementation_help.hpp:
 
+/usr/include/boost/smart_ptr/detail/sp_thread_pause.hpp:
+
 /usr/include/boost/mpl/aux_/config/integral.hpp:
 
 /usr/include/c++/11/bits/sstream.tcc:
@@ -8883,6 +8975,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 
 /usr/include/boost/iterator/iterator_traits.hpp:
 
+/usr/include/boost/smart_ptr/detail/operator_bool.hpp:
+
 /usr/include/boost/preprocessor/repetition/enum_trailing_params.hpp:
 
 /usr/include/boost/preprocessor/repetition/enum_params.hpp:
@@ -8902,6 +8996,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 /usr/include/boost/preprocessor/arithmetic/sub.hpp:
 
 /usr/include/boost/preprocessor/variadic/elem.hpp:
+
+/usr/include/boost/smart_ptr/detail/spinlock.hpp:
 
 /usr/include/boost/preprocessor/tuple/detail/is_single_return.hpp:
 
@@ -9041,6 +9137,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 
 /usr/include/c++/11/pstl/execution_defs.h:
 
+/usr/include/boost/smart_ptr/detail/local_counted_base.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
 
 /usr/include/c++/11/bits/stl_algo.h:
@@ -9058,6 +9156,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 /usr/include/boost/iterator/detail/enable_if.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
+
+/usr/include/boost/smart_ptr/detail/spinlock_gcc_atomic.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
 
@@ -9190,6 +9290,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 ../iteration.cpp:
 
 /usr/include/c++/11/queue:
+
+/usr/include/boost/exception/detail/type_info.hpp:
 
 /usr/local/include/amqpcpp/decimalfield.h:
 
@@ -9380,6 +9482,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 /usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h:
 
 ../conn_handler.h:
+
+/usr/include/boost/type_traits/is_nothrow_move_constructible.hpp:
 
 /usr/include/boost/mpl/has_xxx.hpp:
 
@@ -9649,6 +9753,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 
 /usr/include/c++/11/bits/unordered_map.h:
 
+/usr/include/boost/exception/detail/is_output_streamable.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/cpu-set.h:
 
 /usr/include/x86_64-linux-gnu/asm/posix_types_64.h:
@@ -9811,6 +9917,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 
 /usr/include/boost/mpl/aux_/config/nttp.hpp:
 
+/usr/include/boost/smart_ptr/detail/local_sp_deleter.hpp:
+
 /usr/local/include/amqpcpp/booleanset.h:
 
 /usr/local/include/amqpcpp/fieldproxy.h:
@@ -9917,6 +10025,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
+/usr/include/boost/exception/detail/object_hex_dump.hpp:
+
 /usr/include/c++/11/bits/stl_numeric.h:
 
 /usr/local/include/amqpcpp/endian.h:
@@ -9934,6 +10044,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 /usr/include/boost/range/value_type.hpp:
 
 /usr/local/include/event2/util.h:
+
+/usr/include/boost/exception/detail/shared_ptr.hpp:
 
 /usr/include/c++/11/deque:
 
@@ -10141,6 +10253,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 
 /usr/include/openssl/pem.h:
 
+/usr/include/boost/smart_ptr/shared_ptr.hpp:
+
 /usr/include/openssl/pemerr.h:
 
 /usr/include/boost/type_traits/is_member_function_pointer.hpp:
@@ -10156,6 +10270,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 /usr/include/openssl/sslerr.h:
 
 /usr/include/boost/mpl/aux_/config/gcc.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_has_gcc_intrinsics.hpp:
 
 /usr/include/boost/mpl/aux_/config/ttp.hpp:
 
@@ -10179,6 +10295,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 
 /usr/include/boost/config/stdlib/libstdcpp3.hpp:
 
+/usr/include/boost/smart_ptr/detail/sp_convertible.hpp:
+
 /usr/include/boost/config/platform/linux.hpp:
 
 /usr/include/boost/config/helper_macros.hpp:
@@ -10196,6 +10314,8 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 /usr/include/c++/11/list:
 
 /usr/include/boost/algorithm/string/std/slist_traits.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_nullptr_t.hpp:
 
 /usr/include/boost/algorithm/string/config.hpp:
 
@@ -10221,11 +10341,15 @@ CMakeFiles/Mycascade.dir/stats.cpp.o: ../stats.cpp \
 
 /usr/include/boost/mpl/aux_/na_spec.hpp:
 
+/usr/include/boost/config/pragma_message.hpp:
+
 /usr/include/boost/preprocessor/list/fold_left.hpp:
 
 /usr/include/c++/11/bits/stl_iterator_base_types.h:
 
 /usr/include/boost/mpl/void_fwd.hpp:
+
+/usr/include/boost/exception/get_error_info.hpp:
 
 /usr/include/boost/mpl/aux_/na.hpp:
 

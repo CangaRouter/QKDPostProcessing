@@ -8,27 +8,33 @@ DataPoint::DataPoint(const std::string &algorithm_name, int key_size,
         algorithm_name(algorithm_name),
         key_size(key_size),
         requested_bit_error_rate(requested_bit_error_rate),
-        reconciliations(0) {
-}
+        reconciliations(0) {}
 
 void DataPoint::record_reconciliation_stats(const Cascade::Stats &stats) {
     reconciliations += 1;
-    elapsed_process_time=stats.elapsed_process_time;
-    elapsed_real_time=stats.elapsed_real_time;
-    normal_iterations=stats.normal_iterations;
-    biconf_iterations=stats.biconf_iterations;
-    ask_parity_messages=stats.ask_parity_messages;
-    ask_parity_blocks=stats.ask_parity_blocks;
-    ask_parity_bits=stats.ask_parity_bits;
-    reply_parity_bits=stats.reply_parity_bits;
-    unrealistic_efficiency=stats.unrealistic_efficiency;
-    realistic_efficiency=stats.realistic_efficiency;
-    infer_parity_blocks=stats.infer_parity_blocks;
-    actual_bit_errors=stats.getActualBitErrors();
-    actual_bit_error_rate=stats.getActualBitErrorRate();
-    remaining_bit_errors=stats.getRemainingBitErrors();
-    remaining_bit_error_rate=stats.getRemainingBitErrorRate();
-    correctKey = stats.getCorrectKey().to_string();
+    elapsed_process_time+=stats.elapsed_process_time;
+    elapsed_real_time+=stats.elapsed_real_time;
+    normal_iterations+=stats.normal_iterations;
+    biconf_iterations+=stats.biconf_iterations;
+    ask_parity_messages+=stats.ask_parity_messages;
+    ask_parity_blocks+=stats.ask_parity_blocks;
+    ask_parity_bits+=stats.ask_parity_bits;
+    reply_parity_bits+=stats.reply_parity_bits;
+    unrealistic_efficiency+=stats.unrealistic_efficiency;
+    realistic_efficiency+=stats.realistic_efficiency;
+    infer_parity_blocks+=stats.infer_parity_blocks;
+    actual_bit_errors+=stats.getActualBitErrors();
+    actual_bit_error_rate+=stats.getActualBitErrorRate();
+    remaining_bit_errors+=stats.getRemainingBitErrors();
+    remaining_bit_error_rate+=stats.getRemainingBitErrorRate();
+    correctKey+= stats.getCorrectKey().to_string();
+}
+
+void DataPoint::computeAverages(){
+    unrealistic_efficiency/=reconciliations;
+    realistic_efficiency/=reconciliations;
+    actual_bit_error_rate/=reconciliations;
+    remaining_bit_error_rate/=reconciliations;
 }
 
 std::string DataPoint::to_json() const {
@@ -101,7 +107,7 @@ std::string DataPoint::to_json() const {
     // Unrealistic efficiency
     json += "\"unrealistic_efficiency\": " + std::to_string(unrealistic_efficiency) + ", ";
 
-    json += R"("correctKey":  ")" + correctKey + "\"";
+    json += "\"correctKey\": \"" +correctKey + "\" ";
     json += "}";
     return json;
 }
