@@ -17,6 +17,7 @@ Stats::Stats():
         realistic_efficiency(0.0),
         infer_parity_blocks(0),
         keySize(0),
+        receivedKey(0),
         correctKey(0)
 {
 }
@@ -53,4 +54,12 @@ const Key &Stats::getCorrectKey() const {
 
 void Stats::setCorrectKey(const Key &correctKey) {
     Stats::correctKey = correctKey;
+}
+
+const Key &Stats::getReceivedKey() const {
+    return receivedKey;
+}
+
+void Stats::setReceivedKey(const Key &receivedKey) {
+    Stats::receivedKey = receivedKey;
 }

@@ -99,6 +99,10 @@ public:
 
     void computeAverages();
 
+    const std::string &getReceivedKey() const;
+
+    void setReceivedKey(const std::string &receivedKey);
+
 private:
     std::string algorithm_name;
     int key_size;
@@ -121,6 +125,7 @@ private:
     double remaining_bit_error_rate=0;
     double remaining_frame_error_rate=0;
     std::string correctKey="";
+    std::string receivedKey="";
 };
 
 #endif /* ifndef DATA_POINT_H */

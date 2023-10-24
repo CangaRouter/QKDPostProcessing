@@ -28,6 +28,7 @@ void DataPoint::record_reconciliation_stats(const Cascade::Stats &stats) {
     remaining_bit_errors+=stats.getRemainingBitErrors();
     remaining_bit_error_rate+=stats.getRemainingBitErrorRate();
     correctKey+= stats.getCorrectKey().to_string();
+    receivedKey+= stats.getReceivedKey().to_string();
 }
 
 void DataPoint::computeAverages(){
@@ -106,7 +107,7 @@ std::string DataPoint::to_json() const {
 
     // Unrealistic efficiency
     json += "\"unrealistic_efficiency\": " + std::to_string(unrealistic_efficiency) + ", ";
-
+    json += "\"receivedKey\": \"" + receivedKey + "\" " + ", ";
     json += "\"correctKey\": \"" +correctKey + "\" ";
     json += "}";
     return json;
@@ -278,4 +279,12 @@ const std::string &DataPoint::getCorrectKey() const {
 
 void DataPoint::setCorrectKey(const std::string &correctKey) {
     DataPoint::correctKey = correctKey;
+}
+
+const std::string &DataPoint::getReceivedKey() const {
+    return receivedKey;
+}
+
+void DataPoint::setReceivedKey(const std::string &receivedKey) {
+    DataPoint::receivedKey = receivedKey;
 }

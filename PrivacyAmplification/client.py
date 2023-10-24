@@ -36,15 +36,20 @@ def privacy_amplification(T, K, M, N, initial_value):
     accumulator = np.zeros((N,), dtype=int)
     # Step 3: Compress each group negotiation key
     final_key = np.zeros((K * N,), dtype=int)
-    for i, T_group in enumerate(T_groups):
+    for i, T_group in reversed(list(enumerate(T_groups))):
         T_blocks = np.array_split(T_group, math.ceil(M / N))
         for T_block in T_blocks:
+            print( "CA before update: "+ str(int("".join([str(x) for x in CA]), 2)))
             ands = np.bitwise_and(T_block, CA)
+            print("Ands: "+ str(int("".join([str(x) for x in ands]), 2)))
             CA = update(CA)
+            print("CA after update: "+ str(int("".join([str(x) for x in CA]), 2)))
             accumulator = np.bitwise_xor(accumulator, ands)
+            print("Accumulator: "+str(int("".join([str(x) for x in accumulator]), 2)))
         final_key[i * N:(i + 1) * N] = accumulator
-        CA = final_key[i * N:(i + 1) * N]
-
+        CA = accumulator
+        CA=update(CA)
+        print("End group\n\n")
     # Step 4: Combine the final key blocks into a final security key
     return final_key
 
@@ -52,7 +57,7 @@ def privacy_amplification(T, K, M, N, initial_value):
 def rule(left_cell, center_cell, right_cell):
     rule_number = 150
     ruleN = format(rule_number, '08b')
-    return int(ruleN[7 - (left_cell << 2) - (center_cell << 1) - right_cell])
+    return int(ruleN[(left_cell << 2 | center_cell << 1 | right_cell)])
 
 
 def update(CA):
@@ -66,7 +71,6 @@ def update(CA):
             continue
         new[i] = rule(CA[i - 1], CA[i], CA[i + 1])
     return new
-
 
 def start_client(key, port, usr, psw, host, M, N, lenght,seq):
     """

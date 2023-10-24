@@ -1,6 +1,12 @@
 FROM ubuntu:latest
 RUN apt-get update
-RUN apt-get install -y build-essential cmake libboost-dev libboost-system-dev libboost-thread-dev libevent-dev librabbitmq-dev git python3 pip
+RUN apt-get install -y build-essential wget libboost-dev libboost-system-dev libboost-thread-dev libevent-dev librabbitmq-dev git python3 pip
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4.tar.gz &&\
+    tar -zxvf cmake-3.26.4.tar.gz &&\
+    cd cmake-3.26.4 &&\
+    ./bootstrap &&\
+    make &&\
+    make install
 RUN git clone https://github.com/CopernicaMarketingSoftware/AMQP-CPP.git && \
     cd AMQP-CPP && \
     mkdir build &&\
@@ -14,5 +20,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN ldconfig
 COPY . .
-RUN cmake ./ErrorCorrection
+WORKDIR /Server/error_correction
+RUN cmake ../ErrorCorrection
 RUN make
+WORKDIR /Server/privacy_amplification
+RUN cmake ../PrivacyAmplification/PrivacyAmplificationCPP
+RUN make
+WORKDIR /Server

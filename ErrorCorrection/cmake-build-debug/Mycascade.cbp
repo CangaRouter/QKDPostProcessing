@@ -8,18 +8,18 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/marco/Desktop/Thesis/cmake-build-debug"/>
+				<Option working_dir="/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Mycascade">
-				<Option output="/home/marco/Desktop/Thesis/cmake-build-debug/Mycascade" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/marco/Desktop/Thesis/cmake-build-debug"/>
+				<Option output="/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Mycascade" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -33,15 +33,15 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 Mycascade"/>
-					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 Mycascade"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Mycascade/fast">
-				<Option output="/home/marco/Desktop/Thesis/cmake-build-debug/Mycascade" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/marco/Desktop/Thesis/cmake-build-debug"/>
+				<Option output="/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Mycascade" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -55,136 +55,142 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 Mycascade/fast"/>
-					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 Mycascade/fast"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/marco/Desktop/Thesis/cmake-build-debug"/>
+				<Option working_dir="/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/marco/Desktop/Thesis/cmake-build-debug"/>
+				<Option working_dir="/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/marco/Desktop/Thesis/ErrorCorrection/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/marco/Desktop/Thesis/Client.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/Client.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/Client.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/Client.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/RabbitmqClassicalSession.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/RabbitmqClassicalSession.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/RabbitmqClassicalSession.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/RabbitmqClassicalSession.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/Server.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/Server.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/Server.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/Server.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/algorithm.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/algorithm.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/algorithm.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/algorithm.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/block.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/block.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/block.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/block.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/classical_session.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/classical_session.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/classical_session.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/classical_session.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/conn_handler.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/conn_handler.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/debug.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/data_point.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/debug.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/data_point.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/iteration.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/debug.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/iteration.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/debug.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/key.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/iteration.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/key.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/iteration.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/main.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/key.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/mock_classical_session.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/key.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/mock_classical_session.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/main.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/pending_item.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/mock_classical_session.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/pending_item.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/mock_classical_session.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/random.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/pending_item.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/random.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/pending_item.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/report.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/random.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/report.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/random.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/shuffle.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/report.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/shuffle.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/report.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/shuffled_key.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/shuffle.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/shuffled_key.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/shuffle.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/stats.cpp">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/shuffled_key.cpp">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/stats.h">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/shuffled_key.h">
 			<Option target="Mycascade"/>
 		</Unit>
-		<Unit filename="/home/marco/Desktop/Thesis/CMakeLists.txt">
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/stats.cpp">
+			<Option target="Mycascade"/>
+		</Unit>
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/stats.h">
+			<Option target="Mycascade"/>
+		</Unit>
+		<Unit filename="/home/marco/Desktop/Thesis/ErrorCorrection/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

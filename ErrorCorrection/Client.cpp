@@ -21,6 +21,7 @@ Client::Client(const Algorithm &algorithm, ClassicalSession &classicalSession, i
                                                                                                                     noise),noisyKey(reconciled_key){
 
     stats.keySize = nr_bits;
+    stats.setReceivedKey(reconciled_key);
 }
 
 

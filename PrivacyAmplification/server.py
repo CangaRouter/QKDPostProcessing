@@ -29,6 +29,8 @@ def privacy_amplification(T, K, M, N, initial_value):
             accumulator = np.bitwise_xor(accumulator, ands)
         final_key[i * N:(i + 1) * N] = accumulator
         CA = final_key[i * N:(i + 1) * N]
+        CA=update(CA)
+
 
     # Step 4: Combine the final key blocks into a final security key
     return final_key
@@ -37,7 +39,7 @@ def privacy_amplification(T, K, M, N, initial_value):
 def rule(left_cell, center_cell, right_cell):
     rule_number = 150
     ruleN = format(rule_number, '08b')
-    return int(ruleN[7 - (left_cell << 2) - (center_cell << 1) - right_cell])
+    return int(ruleN[3 - (left_cell << 2) - (center_cell << 1) - right_cell])
 
 
 def update(CA):

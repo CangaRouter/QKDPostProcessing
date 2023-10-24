@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QKD post processing simulator</title>
+    <!-- Add Bootstrap CSS link -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #343a40;
+            color: #ffffff;
+        }.console {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 10px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function setVariant() {
+            var dropdown = document.getElementById('dropdown1');
+            var selectedOption = dropdown.options[dropdown.selectedIndex].value;
+            fetch('/set_variant', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ choice: selectedOption })
+            })
+                .then(response => response.text())
+        }
+          function setCompression() {
+            var dropdown = document.getElementById('dropdown2');
+            var selectedOption = dropdown.options[dropdown.selectedIndex].value;
+            fetch('/set_compression', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ choice: selectedOption })
+            })
+                .then(response => response.text())
+
+        }
+
+        function setQber(){
+            var inputValue = document.getElementById('qberInput').value;
+            var floatValue = parseFloat(inputValue);
+
+            if (isNaN(floatValue)) {
+                alert("Please enter a valid float value.");
+                return;
+            }
+             fetch('/set_qber', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ choice: floatValue })
+            })
+                .then(response => response.text())
+
+
+        }
+        function setBlocks(){
+            var inputValue = document.getElementById('blocksInput').value;
+            var value = parseInt(inputValue);
+
+            if (isNaN(value)) {
+                alert("Please enter a valid int value.");
+                return;
+            }
+             fetch('/set_blocks', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ choice: value })
+            })
+                .then(response => response.text())
+
+        }
+        function setkeysize() {
+            var dropdown = document.getElementById('keysizedropdown');
+            var selectedOption = dropdown.options[dropdown.selectedIndex].value;
+            fetch('/set_keysize', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ choice: selectedOption })
+            })
+                .then(response => response.text())
+
+        }
+         function startSimulation() {
+
+            fetch('/start_simulation', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({  })
+            })
+                .then(response => response.text())
+
+        }
+
+        var eventSource = new EventSource('/stream_console');
+        eventSource.onmessage = function(event) {
+            printToConsole(event.data);
+        };
+         var maxConsoleMessages = 100;
+          function printToConsole(message) {
+        var consoleElement = document.getElementById('console');
+
+        // Split console messages by newline character
+        var messages = message.split('\n');
+
+        // Remove empty messages
+        messages = messages.filter(function(msg) {
+            return msg.trim() !== '';
+        });
+
+        // Truncate console messages if necessary
+        if (messages.length > maxConsoleMessages) {
+            messages = messages.slice(-maxConsoleMessages);
+        }
+
+        // Append the new messages to the existing content
+        consoleElement.textContent += messages.join('\n') + '\n';
+
+        // Scroll to the bottom of the console
+        consoleElement.scrollTop = consoleElement.scrollHeight;
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>QKD post processing simulator</h1>
+        <div class="form-group" >
+            <label for="dropdown1">Select Cascade variant:</label>
+            <select id="dropdown1" class="form-control" onchange="setVariant()">
+                {% for option in variants %}
+                    <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select>
+            <label for="dropdown2">Select Privacy Amplification compression factor:</label>
+            <select id="dropdown2" class="form-control" onchange="setCompression()">
+                {% for option in compressions %}
+                    <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select>
+            <label for="keysizedropdown">Select key size:</label>
+            <select id="keysizedropdown" class="form-control" onchange="setkeysize()">
+                {% for option in keySizes %}
+                    <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="qberInput">Enter QBER:</label>
+            <input type="text" id="qberInput" class="form-control" placeholder="Default=0.01">
+        </div>
+        <button class="btn btn-primary" onclick="setQber()">Set Qber</button>
+        <div class="form-group">
+            <label for="blocksInput">Enter number of Cellular Automata blocks:</label>
+            <input type="text" id="blocksInput" class="form-control" placeholder="Default=10">
+        </div>
+        <button class="btn btn-primary" onclick="setBlocks()">Set blocks</button>
+        <div>
+            <button class="btn btn-primary" onclick="startSimulation()">Start Simultation</button>
+        </div>
+    </div>
+    <div class="console" id="console"></div>
+    </div>
+</body>
+</html>

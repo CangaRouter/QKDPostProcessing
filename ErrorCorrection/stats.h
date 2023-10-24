@@ -43,10 +43,15 @@ namespace Cascade {
         double remaining_bit_error_rate;
         double remaining_frame_error_rate;
         Key correctKey;
+        Key receivedKey;
     public:
         const Key &getCorrectKey() const;
 
         void setCorrectKey(const Key &correctKey);
+
+        const Key &getReceivedKey() const;
+
+        void setReceivedKey(const Key &receivedKey);
 
     };
 
