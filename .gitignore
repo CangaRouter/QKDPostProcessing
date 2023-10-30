@@ -32,3 +32,7 @@
 *.app
 
 Results/
+ResultsDEMO/
+.idea/
+_pycache_/
+*/cmake-build-debug/
