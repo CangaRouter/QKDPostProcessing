@@ -25,7 +25,11 @@ int main(int argc, char** argv) {
         int M = atoi(argv[11]);
         int N = atoi(argv[12]);
         Client client(classical_session, key,pw,host,user,seq,port,algorithmName,size);
-        double time=client.PrivacyAmplification(K,M,N,{0xffffffffff});
+        // K,M,N are the parameters of the cellular automata
+        // initial_value is the initial value of the cellular automata
+        // generating a random key (which is and array of 64 bits words) to use as initial value
+        Key initial_value(N);
+        double time=client.PrivacyAmplification(K,M,N,initial_value.getWords());
         std::cout<<"Elapsed time: "<<time<<std::endl;
     } else{
         std::cout<<"endpoint not recognized"<<std::endl;

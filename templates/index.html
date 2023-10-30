@@ -96,6 +96,41 @@
                 .then(response => response.text())
 
         }
+        function randomKey() {
+            var checkbox = document.getElementById('toggleProvidedKey');
+            var textBox = document.getElementById('providedKeyInput');
+
+            if (checkbox.checked) {
+                textBox.style.display = 'block';
+            } else {
+                textBox.style.display = 'none';
+            }
+             fetch('/provide_key', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({  })
+            })
+                .then(response => response.text())
+
+        }
+        function setKey() {
+            var inputValue = document.getElementById('providedKey').value;
+            var value = parseInt(inputValue);
+            if (isNaN(value)) {
+                alert("Please enter a valid int value.");
+                return;
+            }
+            if(inputValue.match("^[0-1]*$")==null){
+                alert("Please enter a valid binary value.");
+                return;
+            }
+            fetch('/set_key', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({choice: inputValue})
+            })
+                .then(response => response.text())
+        }
 
         var eventSource = new EventSource('/stream_console');
         eventSource.onmessage = function(event) {
@@ -150,6 +185,16 @@
             </select>
         </div>
         <div class="form-group">
+            <label for="toggleProvidedKey">Provide key (by default the server will generate a random key):</label>
+            <input type="checkbox" id="toggleProvidedKey" onchange="randomKey()">
+        </div>
+        <div class="form-group" style="display: none;" id="providedKeyInput">
+            <label for="providedKey">Insert Key:</label>
+            <input type="text" id="providedKey" class="form-control" rows="4">
+            <button class="btn btn-primary" onclick="setKey()">Set Key</button>
+        </div>
+
+        <div class="form-group">
             <label for="qberInput">Enter QBER:</label>
             <input type="text" id="qberInput" class="form-control" placeholder="Default=0.01">
         </div>
@@ -164,6 +209,5 @@
         </div>
     </div>
     <div class="console" id="console"></div>
-    </div>
 </body>
 </html>

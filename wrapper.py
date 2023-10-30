@@ -8,16 +8,17 @@ import progressbar
 import time
 import json
 
-ER_path = "./ErrorCorrection/Build/Mycascade"
-#ER_path = "./error_correction/Mycascade"
-PA_path = "./PrivacyAmplification/PrivacyAmplificationCPP/build/PrivacyAmplificationCPP"
-#PA_path= "./privacy_amplification/PrivacyAmplificationCPP"
+#ER_path = "./ErrorCorrection/Build/Mycascade"
+ER_path = "./error_correction/Mycascade"
+#PA_path = "./PrivacyAmplification/PrivacyAmplificationCPP/build/PrivacyAmplificationCPP"
+PA_path= "./privacy_amplification/PrivacyAmplificationCPP"
 path = "."
 connection_attempts = 0
 er_Times = []
 exchanges = []
 efficiencies = []
 pa_Times = []
+key=""
 endpoint = sys.argv[1]
 keysize = sys.argv[2]
 variant = sys.argv[3]
@@ -30,7 +31,9 @@ pa_blocks = int(sys.argv[9])
 runs = int(sys.argv[10])
 seq = sys.argv[11]
 host = sys.argv[12]
-split_key = sys.argv[13]
+randomKey = sys.argv[13]
+if(randomKey in ["false", "False", "FALSE", "0", "no", "No", "NO", "n", "N"]):
+    key=sys.argv[14]
 
 
 def calcParameters(compression, keyLenght, blocks):
@@ -40,35 +43,38 @@ def calcParameters(compression, keyLenght, blocks):
 
 
 def extract_data():
-    filename = variant + "_" + str(keysize) + "_" + "{:.6f}".format(float(qber)) + ".json"
-    file = open(path + "/" + filename, "r")
-    data = json.load(file)
-    er_Times.append(float(data["elapsed_real_time"]))
-    exchanges.append(int(data["ask_parity_messages"]))
-    efficiencies.append(float(data["unrealistic_efficiency"]))
-    return data, filename
+     filename = variant + "_" + str(keysize) + "_" + "{:.6f}".format(float(qber)) + ".json"
+     file = open(path + "/" + filename, "r")
+     data = json.load(file)
+     er_Times.append(float(data["elapsed_real_time"]))
+     exchanges.append(int(data["ask_parity_messages"]))
+     efficiencies.append(float(data["unrealistic_efficiency"]))
+     return data, filename
 
 
-def error_Correction(endpoint):
-    if split_key == "False":
+
+def error_CorrectionClient():
+    # arguments: [mode:network/local/many] [#bits] [algorithm] [endpoint:client/server] [noise] [host] [port] [user] [pw] [seq]
         process = subprocess.Popen(
-            [ER_path, "network", str(keysize), variant, endpoint, "{:.6f}".format(float(qber)),
+            [ER_path, "network", str(keysize), variant, "client", "{:.6f}".format(float(qber)),
              host, port,
              user, pw, seq], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = process.communicate()
         process.wait()
         if stderr.decode() != "":
             print(stderr.decode())
-    else:
-        process = subprocess.Popen(
-            [ER_path, "many", str(int(keysize) / pa_blocks), variant, endpoint, "{:.6f}".format(float(qber)),
-             host, port,
-             user, pw, str(pa_blocks), seq], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        stdout, stderr = process.communicate()
-        process.wait()
-        if process.returncode != 0:
-            print(stderr.decode())
 
+
+def error_CorrectionServer():
+    #[mode:network/local/many] [#bits] [algorithm] [endpoint:client/server] [noise] [host] [port] [user] [pw] [seq/runs] [seq/keyType] [key]
+    process = subprocess.Popen(
+        [ER_path, "network", str(keysize), variant, "server", "{:.6f}".format(float(qber)),
+         host, port,
+         user, pw, seq, randomKey, key], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    process.wait()
+    if stderr.decode() != "":
+        print(stderr.decode())
 
 def privacy_AmplificationClient(key, keysize, K, M, N):
     # arguments: [key][  # bits] [algorithm] [endpoint:client/server] [host] [port] [user] [pw] [seq] [K] [M] [N]
@@ -137,7 +143,7 @@ bar.start()
 
 
 def ClientRoutine():
-    error_Correction("client")
+    error_CorrectionClient()
     print("Error correction completed")
     data, filename = extract_data()
     os.remove(path + "/" + filename)
@@ -149,14 +155,14 @@ def ClientRoutine():
 
 
 def ServerRoutine():
-    error_Correction("server")
+    error_CorrectionServer()
     print("Error correction completed")
     filename = "key.json"
     file = open(path + "/" + filename, "r")
     data = json.load(file)
     print("Server correct key:" + data["correctKey"] + "\nWith size: " + str(len(data["correctKey"])))
     amplifiedkey = privacy_AmplificationServer(data["correctKey"], int(keysize))
-    print("Server amplified key:" + amplifiedkey + "\nWith size: " + str(len(amplifiedkey)))
+    print("Server amplified key:" + amplifiedkey + "\nWith size: " + str(len(amplifiedkey.strip())))
     os.remove(path + "/" + filename)
 
 

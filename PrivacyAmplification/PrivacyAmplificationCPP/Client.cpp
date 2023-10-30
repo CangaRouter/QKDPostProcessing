@@ -33,6 +33,7 @@ double Client::PrivacyAmplification(int K, int M, int N, std::vector<uint64_t> i
         std::cout<<"amplified key: " <<amplifiedKey.to_string() <<std::endl;
 
     }
+
     struct timespec end_process_time;
     rc = clock_gettime(CLOCK_THREAD_CPUTIME_ID, &end_process_time);
     assert(rc == 0);

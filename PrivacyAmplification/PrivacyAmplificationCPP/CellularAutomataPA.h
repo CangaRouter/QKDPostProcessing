@@ -21,8 +21,8 @@ class CellularAutomataPA {
         static std::vector<uint64_t> bitwise_and(std::vector<uint64_t> &T_block, std::vector<uint64_t> &CA);
         static std::vector<uint64_t> bitwise_xor(std::vector<uint64_t> &accumulator, std::vector<uint64_t> &ands);
         static Key Amplificate(Key Key, int K, int M, int N, std::vector<uint64_t>& initial_value);
-
-
+        static std::vector<uint64_t> extract_bits(const std::vector<uint64_t>& data, int start_index, int end_index);
+        static std::vector<uint64_t> combine_bits(std::vector<uint64_t> *data, int numberOfBits);
 };
 
 

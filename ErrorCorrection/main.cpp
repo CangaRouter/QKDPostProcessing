@@ -8,16 +8,14 @@
 #include <thread>
 #include <string.h>
 #include <cstdlib>
-#include <amqpcpp.h>
 #include <fstream>
-#include "conn_handler.h"
 #include "data_point.h"
 
 
 using namespace Cascade;
 
 void runOnRabbitmq(char *algorithm_name, int size, char *endpoint, double noise, const std::string& host, int port,
-                   const std::string& user, const std::string& pw, std::string seq,DataPoint *dataPoint);
+                   const std::string& user, const std::string& pw, std::string seq,DataPoint *dataPoint, std::string key);
 
 void runLocal(char *algorithm_name, int size, double noise);
 
@@ -26,13 +24,30 @@ void printJsonClient(double errorRate, int nrBits, std::string algorithm, DataPo
 void printJsonServer(std::string key, std::string tag);
 
 int main(int argc, char **argv) {
-    if (argc != 11 && argc!=12) {
+    // [mode:network/local/many] [#bits] [algorithm] [endpoint:client/server] [noise] [host] [port] [user] [pw] [seq/runs] [seq/keyType] [key]
+    // many: runs the protocol many times and prints the average, it also produces a json form with the averages value of the runs
+    // network: runs the protocol on rabbitmq
+    // local: runs the protocol locally (simulating a client-server architecture)
+    // [#bits]: number of bits of the key
+    // [algorithm]: name of the algorithm to use
+    // [endpoint]: client or server
+    // [noise]: noise to add to the key (QBER)
+    // [host]: host of the rabbitmq server
+    // [port]: port of the rabbitmq server
+    // [user]: user of the rabbitmq server
+    // [pw]: password of the rabbitmq server
+    // [seq/runs]: this argument can either be the sequence of the protocol or the number of runs to do (depending on if you're running the algorithm one shot or for multiple testing)
+    // [seq/keyType]: this argument can either be the sequence of the protocol or the  randomness type of the key (true if you want the server to generate a random key or false if you want to provide it in the next argument) (depending on if you're running the algorithm one shot or for multiple testing)
+    // [key]: (only for server instances) this argument is the key to use for the protocol (if not provided a random key will be generated)
+    if (argc <11 || argc >13) {
         std::perror(
-                "Wrong number of arguments \n Usage ./Mycascade [mode:network/local] [#bits] [algorithm] [endpoint:client/server]  ");
+                "Wrong number of arguments \n Usage ./Mycascade [mode:network/local/many] [#bits] [algorithm] [endpoint:client/server] [noise] [host] [port] [user] [pw] [seq/runs] [seq/ranndomKey] [key] ");
         for (int j = 0; j < argc; j++) {
             std::perror(argv[j]);
         }
     }
+    std::string key;
+
     double noise = atof(argv[5]);
     int size = atoi(argv[2]);
     std::string host(argv[6]);
@@ -44,7 +59,12 @@ int main(int argc, char **argv) {
     char *endpoint = argv[4];
     if (strcmp(argv[1], "network") == 0) {
         std::string seq(argv[10]);
-        runOnRabbitmq(algorithmName, size, endpoint, noise, host, port, user, pw, seq, dataPoint);
+        if(strcmp(endpoint,"server")==0){
+            if(strcmp(argv[11],"false")==0 || strcmp(argv[11],"False")==0 || strcmp(argv[11],"FALSE")==0){
+                key= std::string(argv[12]);
+            }
+        }
+        runOnRabbitmq(algorithmName, size, endpoint, noise, host, port, user, pw, seq, dataPoint,key);
         if(strcmp(endpoint,"client")==0) {
             printJsonClient(noise, size, algorithmName, dataPoint);
         }
@@ -54,7 +74,7 @@ int main(int argc, char **argv) {
         int runs=std::stoi(argv[10]);
         std::string seq(argv[11]);
         for (int i=0;i<runs;i++){
-            runOnRabbitmq(algorithmName, size, endpoint, noise, host, port, user, pw, seq, dataPoint);
+            runOnRabbitmq(algorithmName, size, endpoint, noise, host, port, user, pw, seq, dataPoint,key);
             std::cout<<i<<std::endl;
         }
         if(strcmp(endpoint,"client")==0){
@@ -69,11 +89,15 @@ int main(int argc, char **argv) {
 
 
 void runOnRabbitmq(char *algorithm_name, int size, char *endpoint, double noise, const std::string& host, int port,
-                   const std::string& user, const std::string& pw,std::string seq,DataPoint *dataPoint) {
+                   const std::string& user, const std::string& pw,std::string seq,DataPoint *dataPoint, std::string key) {
     try {
         const Algorithm *algorithm = Algorithm::get_by_name(algorithm_name);
         if (strcmp(endpoint, "server") == 0) {
-            Key correct_key = Cascade::Key(size);
+            Key correct_key = NULL;
+            if(strlen(key.c_str())>0)
+                correct_key = Key::parseKey(key);
+            else
+                correct_key = Cascade::Key(size);
             Server server(correct_key, true, host, port, user, pw, noise,seq);
             printJsonServer(correct_key.to_string(), server.getTag());
             return;

@@ -40,7 +40,7 @@ CellularAutomataConfig RabbitmqClassicalSession::NegotiateServer(){
                     try {
                         config.initial_value.push_back(stoull(responseStr[k], nullptr, 10));
                     } catch (...) {
-                        std::cerr << "RabbitmqClassicalSession_PAServer" << std::endl;
+                        std::cerr << "RabbitmqClassicalSession_PAServer "<<"Max: "<< (config.N/64+(config.N%64? 1:0)) << " Actual: " << k << std::endl;
                         std::cerr << m.body() << std::endl;
                         exit(-1);
                     }
@@ -62,11 +62,11 @@ void RabbitmqClassicalSession::NegotiateClient(int K, int M, int N, std::vector<
     headers.set("K", K);
     headers.set("M", M);
     headers.set("N", N);
-    std::string body = "";
+    std::string body;
     for (auto &it: initial_value) {
         body += std::to_string(it) + '\n';
     }
-    AMQP::Envelope env(body.c_str(), body.size());
+    AMQP::Envelope env(body.c_str());
     env.setCorrelationID(correlationId);
     env.setReplyTo("clientQueuePA" + id);
     env.setHeaders(headers);

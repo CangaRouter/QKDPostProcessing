@@ -8,6 +8,7 @@
 #include <cstring>
 #include <iostream>
 #include <unordered_set>
+#include <utility>
 #include <string.h>
 // Key bits are stored into 64-bit int "words" as follows:
 //
@@ -100,6 +101,7 @@ std::string Key::to_string() const
     // v                        v
     // 01011010010110010010101001
     std::string string = "";
+    string.reserve(nr_bits);
     std::string value;
     int bit_nr = 0;
     while (bit_nr < nr_bits) {
@@ -231,7 +233,7 @@ Key Key::parseKey(std::string key)
 
 
 
-Key::Key(int nrBits, int nrWords, std::vector<uint64_t> words) : nr_bits(nrBits), nr_words(nrWords), words(words) {
+Key::Key(int nrBits, int nrWords, std::vector<uint64_t> words) : nr_bits(nrBits), nr_words(nrWords), words(std::move(words)) {
 
 }
 

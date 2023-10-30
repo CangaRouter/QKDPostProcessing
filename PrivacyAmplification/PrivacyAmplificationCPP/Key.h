@@ -14,7 +14,7 @@ public:
     Key(int nr_bits);
     Key(const Key& key);
 
-    Key(int nrBits, int nrWords,std::vector< uint64_t>words);
+    Key(int nrBits, int nrWords,std::vector< uint64_t> words);
 
     ~Key();
     static Key parseKey(std::string key);
