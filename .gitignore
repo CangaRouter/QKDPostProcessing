@@ -34,5 +34,5 @@
 Results/
 ResultsDEMO/
 .idea/
-_pycache_/
+__pycache__/
 */cmake-build-debug/

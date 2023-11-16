@@ -45,6 +45,7 @@ int main(int argc, char **argv) {
         for (int j = 0; j < argc; j++) {
             std::perror(argv[j]);
         }
+        exit(-1);
     }
     std::string key;
 

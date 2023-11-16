@@ -3,6 +3,7 @@ from compose.cli.command import get_project
 import time
 import subprocess
 import json
+import os
 from time import sleep
 from flask import Flask, render_template, request, Response
 
@@ -13,7 +14,7 @@ def print_to_console(message):
     console_output.append(message)
 
 
-def createEnvironment(qber, nBits, port, man_port, ER, compression, blocks, runs, seq, random_key,key):
+def createEnvironment(qber, nBits, port, man_port, ER, compression, blocks, runs, seq, random_key, key):
     with open(".env", "w") as environment:
         environment.write("TAG=v1.6\n")
         environment.write("PORT=" + str(port) + "\n")
@@ -34,16 +35,17 @@ def createEnvironment(qber, nBits, port, man_port, ER, compression, blocks, runs
         environment.close()
 
 
-def runExperiment(qber, compression, keysize, variant, pa_blocks, seq,random_key,key):
-    createEnvironment(qber, keysize, 5672, 15672, variant, compression, pa_blocks, 1, seq, random_key,key)
+def runExperiment(qber, compression, keysize, variant, pa_blocks, seq, random_key, key):
+    createEnvironment(qber, keysize, 5672, 15672, variant, compression, pa_blocks, 1, seq, random_key, key)
     project = get_project('.')
     project.up()
     containerClient = project.containers(service_names=["client"])[0]
     containerClient.wait()
     filename = variant + "_" + str(keysize) + "_" + "{:.6f}".format(float(qber)) + ".json"
     # get the .json files from the container
+    dir_name=os.getcwd().split("/")[-1].lower()
     process = subprocess.Popen(
-        ["docker", "cp", "thesis_client_1:/Client/" + filename, "./ResultsDEMO"], stdout=subprocess.PIPE,
+        ["docker", "cp", dir_name+"_client_1:/Client/" + filename, "./ResultsDEMO"], stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
     process.wait()
@@ -86,7 +88,7 @@ def set_variant():
     data = request.get_json()
     choice = data['choice']
     variant = choice
-    print_to_console("Variant set to"+ variant)
+    print_to_console("Variant set to: " + variant)
     return "ok"
 
 
@@ -133,7 +135,7 @@ def set_keysize():
 @app.route('/start_simulation', methods=['POST'])
 def start_simulation():
     print_to_console("Starting simulation")
-    runExperiment(qber, compression, keySize, variant, pa_blocks, 1, random_key,key)
+    runExperiment(qber, compression, keySize, variant, pa_blocks, 1, random_key, key)
     return "ok"
 
 
@@ -152,7 +154,6 @@ def set_key():
     key = str(choice)
     print_to_console("Key set to: " + key)
     return "ok"
-
 
 
 @app.route('/stream_console')

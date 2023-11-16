@@ -24,6 +24,6 @@ WORKDIR /Server/error_correction
 RUN cmake ../ErrorCorrection
 RUN make
 WORKDIR /Server/privacy_amplification
-RUN cmake ../PrivacyAmplification/PrivacyAmplificationCPP
+RUN cmake ../PrivacyAmplification
 RUN make
 WORKDIR /Server
