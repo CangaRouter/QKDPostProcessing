@@ -1,3 +1,0 @@
-/home/marco/Desktop/Thesis/ErrorCorrection/Build/CMakeFiles/Mycascade.dir
-/home/marco/Desktop/Thesis/ErrorCorrection/Build/CMakeFiles/edit_cache.dir
-/home/marco/Desktop/Thesis/ErrorCorrection/Build/CMakeFiles/rebuild_cache.dir

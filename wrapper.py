@@ -102,8 +102,9 @@ def check_Connection(host, user, pw, seq, port=5672):
         return False
 
 
-def startLoop(ER_path, PA_path, endpoint, keysize, variant, qber, host, port, user, pw, seq,
-              compression, pa_blocks, runs, randomKey=True, key=0, ):
+def startLoop(endpoint, keysize, variant, qber, host, port, user, pw, seq,
+              compression, pa_blocks, runs, randomKey=True, key=0, ER_path = "./error_correction/Mycascade",
+    PA_path = "./privacy_amplification/PrivacyAmplificationCPP"):
     connection_attempts = 0
     while not check_Connection(host, user, pw, seq, port):
         connection_attempts += 1
@@ -229,5 +230,5 @@ if __name__ == '__main__':
     randomKey = sys.argv[13]
     if randomKey in ["false", "False", "FALSE", "0", "no", "No", "NO", "n", "N"]:
         key = sys.argv[14]
-    startLoop(ER_path, PA_path, endpoint, keysize, variant, qber, host, port, user, pw, seq,
-              compression, pa_blocks, runs, randomKey, key)
+    startLoop(endpoint, keysize, variant, qber, host, port, user, pw, seq,
+              compression, pa_blocks, runs, randomKey, key, ER_path, PA_path)

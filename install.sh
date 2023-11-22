@@ -23,11 +23,10 @@ pip3 install --no-cache-dir -r requirements.txt
 sudo ldconfig
 
 # Build error_correction and privacy_amplification
-cd ErrorCorrection/Build
-cmake ..
+cd error_correction
+cmake .
 make
 cd ..
-cd ..
-cd PrivacyAmplification/build
-cmake ..
+cd privacy_amplification
+cmake .
 make
