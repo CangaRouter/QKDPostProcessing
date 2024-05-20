@@ -1,0 +1,1 @@
+Master thesis project on Quantum Key Distribution post processing. The aim of this project is buiding a vitrual network with Docker containers that can measure the performance of many QKD post processing protocols
